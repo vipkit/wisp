@@ -1,5 +1,8 @@
 <template>
-  <div>Hello App</div>
+  <div class="mt-4">
+    Hello App
+    <el-button type="primary">element button</el-button>
+  </div>
 </template>
 
 <script>
