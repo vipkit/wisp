@@ -1,20 +1,19 @@
 <template>
-    <div>
-        home page
-
-    </div>
+  <div>
+    <HelloWorld />
+  </div>
 </template>
 
 <script>
+import HelloWorld from "../components/HelloWorld.vue";
 export default {
-    setup () {
-        
-
-        return {}
-    }
-}
+  components: {
+    HelloWorld,
+  },
+  setup() {
+    return {};
+  },
+};
 </script>
 
-<style  scoped>
-
-</style>
+<style scoped></style>
