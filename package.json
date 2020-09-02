@@ -11,9 +11,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@vue/cli-service": "^4.2.3",
-    "element-ui": "^2.13.2",
     "@baoshishu/vue-editor": "^0.2.8",
+    "@baoshishu/vue-query": "^0.1.4",
+    "@vue/cli-service": "^4.2.3",
+    "@vue/composition-api": "^1.0.0-beta.11",
+    "element-ui": "^2.13.2",
     "prosemirror-utils": "^0.9.6",
     "tiptap": "^1.29.6",
     "tiptap-extensions": "^1.32.6",
@@ -22,8 +24,8 @@
     "vue-router": "^3.4.3"
   },
   "devDependencies": {
-    "vue-template-compiler": "^2.6.12",
     "prettier": "^2.1.1",
-    "tailwindcss": "^1.7.6"
+    "tailwindcss": "^1.7.6",
+    "vue-template-compiler": "^2.6.12"
   }
 }
