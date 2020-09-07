@@ -13,6 +13,9 @@
   "dependencies": {
     "@baoshishu/vue-editor": "^0.2.8",
     "@baoshishu/vue-query": "^0.1.4",
+    "@sentry/browser": "^5.22.3",
+    "@sentry/integrations": "^5.22.3",
+    "@sentry/tracing": "^5.22.3",
     "@vue/cli-service": "^4.2.3",
     "@vue/composition-api": "^1.0.0-beta.11",
     "element-ui": "^2.13.2",
