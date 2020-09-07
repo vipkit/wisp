@@ -43,22 +43,23 @@
     </el-form-item>
     <div v-if="form.merchantId">
       <el-form-item label="跳转类型" prop="isArticle">
-        <el-radio-group v-model="form.isArticle">
+        <el-radio-group v-model="form.isArticle" @change="changeType">
           <el-radio :label="true">图文内容</el-radio>
           <el-radio :label="false">商家活动</el-radio>
         </el-radio-group>
       </el-form-item>
+
       <el-form-item
-        v-if="form.isArticle"
+        v-if="form.isArticle && articles"
         label="图文内容"
         prop="targetId"
         :rules="[{ required: true, message: '请选择图文内容' }]"
       >
         <el-select v-model="form.targetId">
           <el-option
-            v-for="(article, index) of articles"
+            v-for="(article, index) of articles.items"
             :key="index"
-            :label="article.name"
+            :label="article.title"
             :value="article.id"
           />
         </el-select>
@@ -142,7 +143,7 @@ export default {
       ...result,
       merchants: result.data,
       ...articles,
-      articles: articles.items,
+      articles: articles.data,
     }
   },
   methods: {
@@ -152,8 +153,9 @@ export default {
         const params = {
           page,
           q: keyword,
+          merchantId: this.form.merchantId,
         }
-        this.api.merchantGoods({ page, keyword }).then(({ total, items }) => {
+        this.api.merchantGoods(params).then(({ total, items }) => {
           if (goodsMore) {
             this.goods = [...this.data, ...items]
           } else {
@@ -171,6 +173,7 @@ export default {
         const params = {
           page,
           q: keyword,
+          merchantId: this.form.merchantId,
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
           if (couponMore) {
@@ -186,6 +189,10 @@ export default {
     },
 
     changeMerchant() {
+      this.form.targetType = null
+      this.form.targetId = null
+    },
+    changeType() {
       this.form.targetType = null
       this.form.targetId = null
     },

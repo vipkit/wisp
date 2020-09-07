@@ -9,3 +9,4 @@ export const ProviderLinkTargetEnum = {
 export const GOODS = 'GOODS'
 export const MERCHANT = 'MERCHANT'
 export const COUPON = 'COUPON'
+export const ARTICLE = 'ARTICLE'

@@ -15,11 +15,6 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '',
-    redirect: '/artilces',
-    component: Root
-  },
-  {
     path: '/',
     name: 'home',
     redirect: '/artilces',
@@ -31,7 +26,6 @@ const routes = [{
     component: () =>
       import( /* webpackChunkName: "Login" */ './views/Account/Login'),
   },
-
   {
     path: '/code_login',
     component: () =>

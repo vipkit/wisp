@@ -1,4 +1,4 @@
-query banner($id: Int!) {
+query banner($id: IntID!) {
   banner(id: $id) {
     id
     title

@@ -45,9 +45,14 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          api.createBanner(this.form).then(() => {
+          const { isArticle, targetType, ...common } = this.form
+          const params = {
+            ...common,
+            targetType: isArticle ? this.consts.ARTICLE : targetType,
+          }
+          api.createBanner(params).then(() => {
             this.$message.success('成功')
-            this.$router.push({ name: this.name })
+            this.$router.push({ name: 'BannerList' })
           }, this.$error)
         }
       })
@@ -55,4 +60,3 @@ export default {
   },
 }
 </script>
-

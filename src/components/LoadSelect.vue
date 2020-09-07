@@ -87,8 +87,9 @@ export default {
         page: this.page + 1,
         // more: true,
         q: this.keyword,
+        merchantId: this.merchantId,
       }
-      this.action(params).then(() => {
+      this.request(params).then(() => {
         this.loadMore.intercept = false
       })
     },
