@@ -35,6 +35,9 @@ import Fields from './components/Fields'
 import * as api from './api'
 
 export default {
+  components: {
+    Fields,
+  },
   props: {
     info: {
       type: Object,
@@ -44,9 +47,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    Fields,
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     editContent() {
-      this.form = this.create ? this.form : info
+      this.form = this.create ? this.form : this.info
       this.visible = true
     },
     close() {
@@ -86,4 +86,3 @@ export default {
   },
 }
 </script>
-

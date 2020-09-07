@@ -1,7 +1,7 @@
 <template>
   <el-container
-    class="flex w-full h-full items-center"
     v-if="!isLogin && $route.path === '/'"
+    class="flex w-full h-full items-center"
   >
     <Login />
   </el-container>

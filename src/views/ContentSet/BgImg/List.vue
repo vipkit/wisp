@@ -52,6 +52,13 @@ import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
 
 export default {
+  data() {
+    return {
+      form: {
+        imageUrl: null,
+      },
+    }
+  },
   //   setup(ctx, context) {
   //     const result = useQuery([], () => api.bgimg(params))
   //     return {
@@ -64,13 +71,6 @@ export default {
         imageUrl: this.bgimg,
       }
     },
-  },
-  data() {
-    return {
-      form: {
-        imageUrl: null,
-      },
-    }
   },
   methods: {
     handleUploadSuccess() {
