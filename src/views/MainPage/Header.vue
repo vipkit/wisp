@@ -270,10 +270,10 @@ export default {
   z-index: 9;
 }
 .logo {
-  background: $primary-color-darken;
+  background: #2882ff;
 }
 .header-nav {
-  background: $primary-color;
+  background: #5ba0ff;
   height: 54px;
 }
 .menu-item {
