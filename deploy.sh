@@ -21,5 +21,5 @@ done
 release=`npx -c 'echo "$mode@$npm_package_version"'`
 echo $release
 
-# sentry-cli releases  -o baoshishu -p wisp files $release upload-sourcemaps dist/js --rewrite --url-prefix '~/js'
+sentry-cli releases  -o baoshishu -p wisp files $release upload-sourcemaps dist/js --rewrite --url-prefix '~/js'
 
