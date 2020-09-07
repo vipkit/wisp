@@ -1,0 +1,84 @@
+query merchants {
+  viewer {
+    merchants {
+      id
+      name
+    }
+  }
+}
+
+query qiniuToken {
+  qiniuToken {
+    token
+    domain
+    expires
+  }
+}
+
+# query AccountQuery {
+#   account {
+#     id
+#     mobile
+#     username
+#     hasMerchant
+#   }
+# }
+# query initMerchant {
+#   viewer {
+#     id
+#     companyName
+#     companyLicense
+#     companyLicenseImg
+#     contactName
+#     address
+#     createdAt
+#     brandName
+#     brandImage
+#     brandDescription
+#     brandHeaderImg
+#     brandThemeColor
+#   }
+# }
+
+query merchantGoods($params: MerchantGoodsParams) {
+  merchantGoods(params: $params) {
+    total
+    items {
+      id
+      code
+      name
+    }
+  }
+}
+
+query merchantCoupons($params: MerchantCouponParams) {
+  merchantCoupons(params: $params) {
+    total
+    items {
+      id
+      code
+      name
+    }
+  }
+}
+
+query articles($params: ArticleParams) {
+  articles(params: $params) {
+    total
+    items {
+      id
+      title
+      imageUrl
+      merchant {
+        id
+        name
+      }
+      actionButtonText
+      content
+      publishAt
+      link
+      external
+      targetId
+    }
+  }
+}

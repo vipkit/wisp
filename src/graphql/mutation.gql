@@ -1,0 +1,13 @@
+mutation login($input: LoginInput!) {
+  login(input: $input) {
+    payload {
+      token
+    }
+  }
+}
+
+mutation SendCode($mobile: Mobile!) {
+  sendCode(mobile: $mobile) {
+    code
+  }
+}

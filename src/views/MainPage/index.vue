@@ -1,0 +1,53 @@
+<template>
+  <div class="main-wrapper h-screen">
+    <HomeHeader />
+    <el-container class="relative">
+      <SideMenu />
+      <el-main class="main-content absolute right-0 bottom-0 border-red">
+        <router-view />
+      </el-main>
+    </el-container>
+  </div>
+</template>
+
+<script>
+import Menu from './Menu'
+import Header from './Header'
+// import { mapGetters } from 'vuex'
+
+export default {
+  components: {
+    SideMenu: Menu,
+    HomeHeader: Header,
+  },
+
+  mounted() {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      // this.$store.dispatch('account').then(() => {
+      //   const account = this.$store.state.account
+      //   if (!account || !account.hasMerchant) {
+      //     //注册过但是并没有提交审核
+      //     this.$message('没有该账号')
+      //   } else {
+      //     this.$store.dispatch('merchant')
+      //   }
+      // })
+    },
+  },
+}
+</script>
+<style scoped>
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.main-content {
+  left: 200px;
+  top: 55px;
+  bottom: 0;
+}
+</style>

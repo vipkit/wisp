@@ -1,0 +1,18 @@
+query article($id: IntID!) {
+  article(id: $id) {
+    id
+    title
+    imageUrl
+    merchant {
+      id
+      name
+    }
+    actionButtonText
+    content
+    publishAt
+    link
+    external
+    targetType
+    targetId
+  }
+}

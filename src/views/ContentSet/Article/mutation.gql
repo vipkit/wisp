@@ -1,0 +1,11 @@
+mutation createArticle($input: CreateArticleInput!) {
+  createArticle(input: $input)
+}
+
+mutation updateArticle($input: UpdateArticleInput!) {
+  updateArticle(input: $input)
+}
+
+mutation deleteArticle($input: DeleteArticleInput!) {
+  deleteArticle(input: $input)
+}

@@ -1,0 +1,29 @@
+query activity($id: IntID!) {
+  activity(id: $id) {
+    id
+    title
+    imageUrl
+    merchant {
+      id
+      name
+    }
+    targetType
+    targetId
+  }
+}
+query activities($params: ActivityParams) {
+  activities(params: $params) {
+    total
+    items {
+      id
+      title
+      imageUrl
+      merchant {
+        id
+        name
+      }
+      targetType
+      targetId
+    }
+  }
+}

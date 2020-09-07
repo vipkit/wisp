@@ -1,0 +1,17 @@
+query articleEntry($id: Int!) {
+  articleEntry(id: $id) {
+    id
+    publishAt
+    articleId
+  }
+}
+query articlreEntries($params: ArticleEntryParams) {
+  articlreEntries(params: $params) {
+    total
+    items {
+      id
+      publishAt
+      articleId
+    }
+  }
+}
