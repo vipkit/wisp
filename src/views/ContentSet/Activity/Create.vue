@@ -34,39 +34,25 @@ export default {
         title: null,
         imageUrl: null,
         merchantId: null,
-        actionButtonText: null,
-        content: null,
-        publishAt: null,
-        link: null,
-        external: false,
         targetType: null,
         targetId: null,
+        isArticle: true,
       },
-      paths: [{ to: 'ArticleList', name: '图文内容' }],
+      paths: [{ to: 'ActivityList', name: '活动列表' }],
     }
   },
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          const { linkCode, linkCodeData, ...common } = this.form
-          if (linkCode === this.consts.GOODS && !linkCodeData) {
-            this.$message('请先选择商品编号')
-            return
-          }
+          const { isArticle, targetType, ...common } = this.form
           const params = {
             ...common,
-            linkCode,
-            linkCodeData:
-              linkCode === this.consts.GOODS_CATEGORY
-                ? linkCodeData && linkCodeData.length
-                  ? linkCodeData[linkCodeData.length - 1].toString()
-                  : null
-                : linkCodeData,
+            targetType: isArticle ? this.consts.ARTICLE : targetType,
           }
-          api.wxBannerAdd(params).then(() => {
+          api.createActivity(params).then(() => {
             this.$message.success('成功')
-            this.$router.push({ name: this.name })
+            this.$router.push({ name: 'ActivityList' })
           }, this.$error)
         }
       })
@@ -74,4 +60,3 @@ export default {
   },
 }
 </script>
-

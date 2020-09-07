@@ -1,8 +1,15 @@
 query articleEntry($id: Int!) {
   articleEntry(id: $id) {
     id
-    publishAt
-    articleId
+    article {
+      id
+      title
+      imageUrl
+      merchant {
+        id
+        name
+      }
+    }
   }
 }
 query articlreEntries($params: ArticleEntryParams) {
@@ -10,8 +17,15 @@ query articlreEntries($params: ArticleEntryParams) {
     total
     items {
       id
-      publishAt
-      articleId
+      article {
+        id
+        title
+        imageUrl
+        merchant {
+          id
+          name
+        }
+      }
     }
   }
 }
