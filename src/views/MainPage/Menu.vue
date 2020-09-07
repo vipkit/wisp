@@ -62,7 +62,7 @@ export default {
 
 .menu-home-active {
   color: #f0f3fa;
-  background: $primary-color !important;
+  background: #5ba0ff !important;
 
   .icon {
     path {
@@ -79,7 +79,7 @@ export default {
 
   &:hover {
     color: #f0f3fa;
-    background: $primary-color;
+    background: #5ba0ff;
 
     .icon {
       path {
@@ -102,7 +102,7 @@ export default {
   margin-right: 10px;
 
   path {
-    fill: $primary-color;
+    fill: #5ba0ff;
   }
 }
 </style>

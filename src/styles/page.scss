@@ -20,24 +20,24 @@
 .el-menu-item:hover,
 .el-menu-item.is-active,
 .el-menu-item:focus {
-  background-color: $primary-color;
-  color: $white;
+  background-color: #5ba0ff;
+  color: white;
 
   .icon {
     path {
-      fill: $white;
-      stroke: $primary-color;
+      fill: #ffffff;
+      stroke: #5ba0ff;
     }
   }
 }
 
 .main {
-  background-color: $white;
+  background-color: #ffffff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 
-.content li+li {
+.content li + li {
   margin-top: 0.25em;
 }
 
@@ -217,7 +217,7 @@
   border-bottom-width: 0;
 }
 
-.content .tabs li+li {
+.content .tabs li + li {
   margin-top: 0;
 }
 
@@ -233,17 +233,17 @@
   font-size: 1.5rem;
 }
 
-.content ul>li {
+.content ul > li {
   list-style-type: disc !important;
 }
 
-.content ol>li {
+.content ol > li {
   list-style-type: decimal !important;
 }
 
 .content hr {
   height: 1px !important;
-  background: $black;
+  background: #000000;
 }
 
 .content * {
