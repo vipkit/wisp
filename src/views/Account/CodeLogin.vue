@@ -1,0 +1,113 @@
+<template>
+  <div class="columns flex space-between flex-grow">
+    <NoLoginHeader />
+    <div
+      class="flex-grow flex items-center justify-center bg-grey-lightest py-3"
+    >
+      <div class="form bg-white shadow-lg">
+        <el-form
+          ref="form"
+          :model="form"
+          :rules="rules"
+          label-position="left"
+          status-icon
+          label-width="80px"
+          @submit.prevent.native="submit"
+        >
+          <el-form-item label="手机号" prop="login" for="mobile">
+            <el-input
+              id="mobile"
+              v-model.trim="form.login"
+              placeholder="请输入手机号码"
+            />
+          </el-form-item>
+          <el-form-item label="验证码" prop="code" for="code">
+            <div class="flex">
+              <el-input
+                id="code"
+                v-model.trim="form.code"
+                placeholder="请输入6位验证码"
+              >
+                <send-code slot="append" :mobile="form.login" />
+              </el-input>
+            </div>
+          </el-form-item>
+          <el-button class="load" type="primary" native-type="submit"
+            >登录</el-button
+          >
+          <div class="flex flex-end">
+            <router-link
+              to="/login"
+              class="greyLink darkgrey font-size-sm m-y-md"
+            >
+              密码登录
+            </router-link>
+          </div>
+        </el-form>
+      </div>
+    </div>
+    <PageFooter />
+  </div>
+</template>
+<script>
+import { mobileValidator, codeValidator } from '@/utils/validator'
+import SendCode from '@/components/SendCode'
+import PageFooter from '@/components/PageFooter'
+
+export default {
+  components: {
+    SendCode,
+    PageFooter,
+  },
+  data() {
+    return {
+      form: {
+        login: '',
+        code: '',
+      },
+      rules: {
+        login: mobileValidator,
+        code: codeValidator,
+      },
+    }
+  },
+  mounted() {
+    if (window.localStorage.wisp_token) this.$router.push('/')
+  },
+  methods: {
+    submit() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.$store
+            .dispatch('login', this.form)
+            .then(() => {
+              this.$router.push(this.$route.query.redirect || '/articles')
+            })
+            .catch(error => {
+              if (error.code === 3004) {
+                this.$message.error('该账号尚未注册')
+                return
+              }
+              this.$error(error)
+            })
+        }
+      })
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.form {
+  margin: 0 auto;
+  max-width: 500px;
+  width: 90vw;
+  padding: 2rem;
+}
+.load {
+  width: 100%;
+}
+.greyLink {
+  text-decoration: none;
+}
+</style>

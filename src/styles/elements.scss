@@ -1,0 +1,28 @@
+.data-title {
+  min-width: 140px;
+  width: 140px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8b99b9;
+}
+
+.data-value {
+  font-size: 14px;
+  line-height: 20px;
+  color: $darkgrey;
+  word-break: break-word;
+}
+
+.data-title::after {
+  content: ':';
+}
+
+form.search {
+  .el-form-item {
+    margin-bottom: 10px;
+  }
+}
+
+.title {
+  font-size: 40px;
+}

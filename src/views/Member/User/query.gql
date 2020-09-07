@@ -1,0 +1,8 @@
+query members($params:MemberQueryParams) {
+  members(params:$params) {
+    total
+    items{
+      id
+    }
+  }
+}

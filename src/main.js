@@ -2,15 +2,68 @@ import Vue from 'vue'
 import * as Sentry from '@sentry/browser'
 import { Vue as VueIntegration } from '@sentry/integrations'
 import { Integrations } from '@sentry/tracing'
-import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import './main.css'
 
-Vue.config.productionTip = false
+import VueCompositionApi from '@vue/composition-api'
+import ImageUploader from './components/ImgUploader.vue'
+import VueEditor from './components/VueEditor.vue'
+import DetailItem from './components/DetailItem'
+import LoadSelect from './components/LoadSelect'
+import ComPagination from './components/Pagination'
+import BreadCrumb from './components/BreadCrumb'
+import Avatar from './components/Avatar'
+import router from './router'
+import directive from './utils/directive'
+import 'element-ui/packages/theme-chalk/src/index.scss'
+import './styles/index.scss'
+import * as consts from './consts'
+import * as api from './api'
+import { store } from './store'
+import ElementUI, { Message, MessageBox } from 'element-ui'
+
+Vue.use(VueCompositionApi)
 Vue.use(ElementUI)
+Vue.use(directive)
+
+Vue.prototype.$confirm = (...args) => {
+  return new Promise(function (resolve) {
+    MessageBox.confirm(...args)
+      .then(resolve)
+      .catch(console.log)
+  })
+}
+Vue.config.productionTip = false
+Vue.mixin({
+  data: function () {
+    return {
+      consts,
+      api,
+    }
+  },
+  methods: {
+    $error: error => {
+      console.table(error)
+      let message = error.response
+        ? error.response.errors[0].message
+        : error.message
+      Message.error(message)
+    },
+  },
+})
+
+Vue.component('DetailItem', DetailItem)
+Vue.component('ImageUploader', ImageUploader)
+Vue.component('Editor', VueEditor)
+Vue.component('Pagination', ComPagination)
+Vue.component('LoadSelect', LoadSelect)
+Vue.component('BreadCrumb', BreadCrumb)
+Vue.component('Avatar', Avatar)
 
 new Vue({
+  router,
+  store,
   render: h => h(App),
 }).$mount('#app')
 
