@@ -41,7 +41,7 @@
         />
       </el-select>
     </el-form-item>
-    <div class="flex" v-if="form.merchantId">
+    <div v-if="form.merchantId" class="flex">
       <el-form-item
         label="跳转页面"
         prop="targetType"
@@ -57,8 +57,8 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label-width="20px"
         v-if="[consts.GOODS].includes(form.targetType)"
+        label-width="20px"
         prop="targetId"
         :rules="[{ required: true, message: '请选择跳转的商品详情' }]"
       >
@@ -66,14 +66,14 @@
           v-model="form.targetId"
           :data="goods"
           :page="goodsPage"
-          :merchantId="form.merchantId"
-          :hasMore="goodsMore"
+          :merchant-id="form.merchantId"
+          :has-more="goodsMore"
           :request="getGoods"
         />
       </el-form-item>
       <el-form-item
-        label-width="20px"
         v-if="[consts.COUPON].includes(form.targetType)"
+        label-width="20px"
         prop="targetId"
         :rules="[{ required: true, message: '请选择跳转的优惠券' }]"
       >
@@ -81,9 +81,9 @@
           v-model="form.targetId"
           :data="coupons"
           :page="couponPage"
-          :hasMore="couponMore"
+          :has-more="couponMore"
           :request="getCoupon"
-          :merchantId="form.merchantId"
+          :merchant-id="form.merchantId"
         />
       </el-form-item>
     </div>
@@ -120,8 +120,8 @@
       :rules="[{ required: true, message: '请输入公众号文章链接' }]"
     >
       <el-input
-        class="w-64"
         v-model.trim="form.link"
+        class="w-64"
         placeholder="公众号文章链接"
       />
     </el-form-item>

@@ -1,23 +1,23 @@
 <template>
   <el-select
-    :value="value"
     v-loadmore="loadMore"
-    @focus="focus"
-    @clear="clear"
+    :value="value"
     filterable
     remote
     :filter-method="handleSearch"
     :loading="loading"
     clearable
     v-bind="$attrs"
-    v-on="$listeners"
     class="w-64"
+    @focus="focus"
+    @clear="clear"
+    v-on="$listeners"
   >
     <el-option
       v-for="(option, index) in data"
+      :key="index"
       :label="option[dictLabel]"
       :value="option[dictValue]"
-      :key="index"
     />
     <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
     <el-option v-if="hasMore" disabled label="加载中..." value="-1"></el-option>

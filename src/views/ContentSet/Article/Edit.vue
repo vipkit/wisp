@@ -28,14 +28,14 @@ import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
 
 export default {
+  components: {
+    Fields,
+  },
   props: {
     id: {
       type: [Number, String],
       required: true,
     },
-  },
-  components: {
-    Fields,
   },
   data() {
     return {

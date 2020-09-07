@@ -63,7 +63,7 @@
           />
         </el-select>
       </el-form-item>
-      <div class="flex" v-else>
+      <div v-else class="flex">
         <el-form-item
           label="跳转类型"
           prop="targetType"
@@ -79,8 +79,8 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label-width="20px"
           v-if="[consts.GOODS].includes(form.targetType)"
+          label-width="20px"
           prop="targetId"
           :rules="[{ required: true, message: '请选择跳转的商品详情' }]"
         >
@@ -88,14 +88,14 @@
             v-model="form.targetId"
             :data="goods"
             :page="goodsPage"
-            :hasMore="goodsMore"
+            :has-more="goodsMore"
             :request="getGoods"
-            :merchantId="form.merchantId"
+            :merchant-id="form.merchantId"
           />
         </el-form-item>
         <el-form-item
-          label-width="20px"
           v-if="[consts.COUPON].includes(form.targetType)"
+          label-width="20px"
           prop="targetId"
           :rules="[{ required: true, message: '请选择跳转的优惠券' }]"
         >
@@ -103,9 +103,9 @@
             v-model="form.targetId"
             :data="coupons"
             :page="couponPage"
-            :hasMore="couponMore"
+            :has-more="couponMore"
             :request="getCoupon"
-            :merchantId="form.merchantId"
+            :merchant-id="form.merchantId"
           />
         </el-form-item>
       </div>
