@@ -7,6 +7,12 @@ query merchants {
   }
 }
 
+query name {
+  viewer {
+    name
+  }
+}
+
 query qiniuToken {
   qiniuToken {
     token
@@ -14,31 +20,6 @@ query qiniuToken {
     expires
   }
 }
-
-# query AccountQuery {
-#   account {
-#     id
-#     mobile
-#     username
-#     hasMerchant
-#   }
-# }
-# query initMerchant {
-#   viewer {
-#     id
-#     companyName
-#     companyLicense
-#     companyLicenseImg
-#     contactName
-#     address
-#     createdAt
-#     brandName
-#     brandImage
-#     brandDescription
-#     brandHeaderImg
-#     brandThemeColor
-#   }
-# }
 
 query merchantGoods($params: MerchantGoodsParams) {
   merchantGoods(params: $params) {

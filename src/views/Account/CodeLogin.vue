@@ -1,9 +1,6 @@
 <template>
-  <div class="columns flex space-between flex-grow">
-    <NoLoginHeader />
-    <div
-      class="flex-grow flex items-center justify-center bg-grey-lightest py-3"
-    >
+  <div class="flex flex-col h-screen">
+    <div class="flex-1 flex items-center justify-center">
       <div class="form bg-white shadow-lg">
         <el-form
           ref="form"
@@ -35,11 +32,8 @@
           <el-button class="load" type="primary" native-type="submit"
             >登录</el-button
           >
-          <div class="flex flex-end">
-            <router-link
-              to="/login"
-              class="greyLink darkgrey font-size-sm m-y-md"
-            >
+          <div class="flex flex-row-reverse">
+            <router-link to="/login" class="text-gray-700 text-sm my-2">
               密码登录
             </router-link>
           </div>

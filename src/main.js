@@ -8,10 +8,11 @@ import './main.css'
 
 import VueCompositionApi from '@vue/composition-api'
 import ImageUploader from './components/ImgUploader.vue'
+import RouteWrapper from './components/RouteWrapper'
 import VueEditor from './components/VueEditor.vue'
 import DetailItem from './components/DetailItem'
 import LoadSelect from './components/LoadSelect'
-import ComPagination from './components/Pagination'
+import Pagination from './components/Pagination'
 import BreadCrumb from './components/BreadCrumb'
 import Avatar from './components/Avatar'
 import router from './router'
@@ -54,8 +55,9 @@ Vue.mixin({
 
 Vue.component('DetailItem', DetailItem)
 Vue.component('ImageUploader', ImageUploader)
+Vue.component('Route', RouteWrapper)
 Vue.component('Editor', VueEditor)
-Vue.component('Pagination', ComPagination)
+Vue.component('Pagination', Pagination)
 Vue.component('LoadSelect', LoadSelect)
 Vue.component('BreadCrumb', BreadCrumb)
 Vue.component('Avatar', Avatar)

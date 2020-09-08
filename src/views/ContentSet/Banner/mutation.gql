@@ -13,3 +13,7 @@ mutation deleteBanner($input: DeleteBannerInput!) {
 mutation sortBanner($input: SortBannerInput!) {
   sortBanner(input: $input)
 }
+
+mutation changeBannerStatus($input: ChangeBannerStatusInput!) {
+  changeBannerStatus(input: $input)
+}

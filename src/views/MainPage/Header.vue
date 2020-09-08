@@ -1,10 +1,10 @@
 <template>
   <el-header class="fixed left-0 right-0 border-bottom header" height="55px">
     <!-- <el-row v-if="menus && hasMerchant" type="flex"> -->
-    <el-row v-if="menus" type="flex">
-      <el-aside width="200px" class="center logo">
+    <el-row v-if="menus && hasMerchant" type="flex">
+      <el-aside width="200px" class="logo justify-center items-center">
         <router-link to="/articles">
-          <img width="128" src="@/assets/logo.png" />
+          <!-- <img width="128" src="@/assets/logo.png" /> -->
         </router-link>
       </el-aside>
       <div
@@ -66,20 +66,15 @@
       </div>
       <div class="flex logo-container px-2 header-nav flex-row-reverse">
         <div class="flex items-center text-white">
-          <img
-            v-if="brandImage"
-            :src="brandImage"
-            class="w-8 h-8 mr-2 rounded-full"
-          />
           <el-tooltip placement="bottom">
             <div slot="content">
-              {{ brandName ? brandName : userName }}
+              {{ account }}
             </div>
             <div
               style="max-width: 100px"
               class="text-sm truncate cursor-pointer"
             >
-              {{ brandName ? brandName : userName }}
+              {{ account }}
             </div>
           </el-tooltip>
           <span class="mx-2">|</span>
@@ -144,9 +139,9 @@ export default {
   computed: {
     hasMerchant() {
       const account = this.$store.state.account
-      return account && account.hasMerchant
+      return account
     },
-    ...mapGetters(['userName', 'brandName', 'brandImage', 'merchant']),
+    ...mapGetters(['account']),
     showIcon() {
       if (!this.menus) {
         return
@@ -171,7 +166,6 @@ export default {
         return
       }
       this.initMenus()
-      // this.getActiveMenu(this.$store.state.menus)
     },
     hasMerchant() {
       this.initMenus()
@@ -202,14 +196,11 @@ export default {
   },
   methods: {
     async initMenus() {
-      // const account = this.$store.state.account
-      // if (!account || !account.hasMerchant) {
-      //   return
-      // }
-      // let Admission = this.merchant?.profile?.modules || []
-      // if (!Admission.length) return
       if (!this.$store.state || !this.$store.state.menus) return
-
+      const account = this.$store.state.account
+      if (!account) {
+        return
+      }
       const menus = this.$store.state.menus
       this.menus = menus
       const activeNav = this.menus
@@ -254,7 +245,7 @@ export default {
 
     loginOut() {
       this.$store.dispatch('signout').then(() => {
-        this.$router.push('/')
+        this.$router.push('/login')
       })
     },
     newPath(path) {

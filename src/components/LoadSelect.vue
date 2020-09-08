@@ -1,27 +1,34 @@
 <template>
-  <el-select
-    v-loadmore="loadMore"
-    :value="value"
-    filterable
-    remote
-    :filter-method="handleSearch"
-    :loading="loading"
-    clearable
-    v-bind="$attrs"
-    class="w-64"
-    @focus="focus"
-    @clear="clear"
-    v-on="$listeners"
-  >
-    <el-option
-      v-for="(option, index) in data"
-      :key="index"
-      :label="option[dictLabel]"
-      :value="option[dictValue]"
-    />
-    <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
-    <el-option v-if="hasMore" disabled label="加载中..." value="-1"></el-option>
-  </el-select>
+  <div>
+    <el-select
+      v-loadmore="loadMore"
+      :value="value"
+      filterable
+      remote
+      :filter-method="handleSearch"
+      :loading="loading"
+      clearable
+      v-bind="$attrs"
+      class="w-64"
+      @focus="focus"
+      @clear="clear"
+      v-on="$listeners"
+    >
+      <el-option
+        v-for="(option, index) in data"
+        :key="index"
+        :label="option[dictLabel]"
+        :value="option[dictValue].toString()"
+      />
+      <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
+      <el-option
+        v-if="hasMore"
+        disabled
+        label="加载中..."
+        value="-1"
+      ></el-option>
+    </el-select>
+  </div>
 </template>
 
 <script>

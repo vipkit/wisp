@@ -22,6 +22,7 @@ query banners($params: BannerParams) {
         id
         name
       }
+      status
       targetType
       targetId
     }

@@ -63,6 +63,7 @@
         :rules="[{ required: true, message: '请选择跳转的商品详情' }]"
       >
         <LoadSelect
+          v-if="goods"
           v-model="form.targetId"
           :data="goods"
           :page="goodsPage"
@@ -78,6 +79,7 @@
         :rules="[{ required: true, message: '请选择跳转的优惠券' }]"
       >
         <LoadSelect
+          v-if="coupons"
           v-model="form.targetId"
           :data="coupons"
           :page="couponPage"
@@ -142,12 +144,15 @@ export default {
   },
   data() {
     return {
-      goods: [],
-      coupons: [],
+      goods: null,
+      coupons: null,
+      couponsInit: true,
       couponMore: true,
       couponPage: 1,
       goodsMore: true,
       goodsPage: 1,
+      goodsInit: true,
+      isInit: true,
     }
   },
   setup(ctx, context) {
@@ -155,6 +160,17 @@ export default {
     return {
       ...result,
       merchants: result.data,
+    }
+  },
+  mounted() {
+    if (this.isInit && this.form.merchantId) {
+      this.isInit = false
+      if (this.form.targetType === this.consts.COUPON) {
+        this.getCoupon()
+      }
+      if (this.form.targetType === this.consts.GOODS) {
+        this.getGoods()
+      }
     }
   },
   methods: {
@@ -167,6 +183,7 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
+          const goods = this.goods || []
           this.goods = [...this.goods, ...items]
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
@@ -183,9 +200,11 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
-          this.coupons = [...this.coupons, ...items]
+          const coupons = this.coupons || []
+          this.coupons = [...coupons, ...items]
           this.couponMore = this.coupons.length < total
           this.coupnPage = page
+
           resolve()
         })
       })

@@ -50,7 +50,6 @@ export default {
   watch: {
     data() {
       const data = this.data
-      console.log(data)
       this.form = {
         ...data,
         merchantId: data.merchant.id,

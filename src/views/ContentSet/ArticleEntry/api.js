@@ -6,9 +6,9 @@ const apiPath = process.env.API_ENV || 'https://api.zanquan.xyz'
 const API_URL = `${apiPath}/provider/graphql`
 
 export const articlreEntries = params =>
-  request(API_URL, query.articlreEntries, {
-    params,
-  }).then(({ articlreEntries }) => articlreEntries)
+  request(API_URL, query.articlreEntries, params).then(
+    ({ articlreEntries }) => articlreEntries
+  )
 
 export const articleEntry = id =>
   request(API_URL, query.articleEntry, {
