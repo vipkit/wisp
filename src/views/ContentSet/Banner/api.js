@@ -5,24 +5,15 @@ import * as query from './query.gql'
 const apiPath = process.env.API_ENV || 'https://api.zanquan.xyz'
 const API_URL = `${apiPath}/provider/graphql`
 
-
 export const banners = params =>
   request(API_URL, query.banners, {
-    params
-  }).then(
-    ({
-      banners
-    }) => banners
-  )
+    params,
+  }).then(({ banners }) => banners)
 
 export const banner = id =>
   request(API_URL, query.banner, {
-    id
-  }).then(
-    ({
-      banner
-    }) => banner
-  )
+    id,
+  }).then(({ banner }) => banner)
 
 export const createBanner = params =>
   request(API_URL, mutation.createBanner, {
@@ -37,4 +28,9 @@ export const updateBanner = params =>
 export const deleteBanner = id =>
   request(API_URL, mutation.deleteBanner, {
     input: id,
+  })
+
+export const sortBanner = params =>
+  request(API_URL, mutation.sortBanner, {
+    input: params,
   })

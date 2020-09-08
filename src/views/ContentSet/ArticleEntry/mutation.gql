@@ -9,3 +9,7 @@ mutation editArticleEntry($input: UpdateArticleEntryInput!) {
 mutation deleteArticleEntry($input: DeleteArticleEntryInput!) {
   deleteArticleEntry(input: $input)
 }
+
+mutation sortArticleEntry($input: SortArticleEntryInput!) {
+  sortArticleEntry(input: $input)
+}

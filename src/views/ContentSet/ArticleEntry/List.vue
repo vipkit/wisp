@@ -3,6 +3,7 @@
     <el-header class="flex justify-between">
       <span>内容列表</span>
       <div class="flex">
+        <SortEntry v-if="data" :entries="data.items" @refetch="refetch" />
         <EditContent :create="true" @refetch="refetch" />
       </div>
     </el-header>
@@ -54,11 +55,20 @@
           min-width="240"
         >
           <div class="flex">
+            <router-link
+              class="mr-4"
+              :to="{
+                name: 'ArticleEdit',
+                params: { id: row.article.id },
+              }"
+            >
+              <el-link type="primary" class="mr-4">编辑图文</el-link>
+            </router-link>
             <el-link
               :underline="false"
               class="mr-4"
-              type="danger"
-              @click="deleteBanner(row.id)"
+              type="primary"
+              @click="deleteArticleEntry(row.id)"
             >
               上线
             </el-link>
@@ -66,14 +76,14 @@
               :underline="false"
               class="mr-4"
               type="danger"
-              @click="deleteBanner(row.id)"
+              @click="deleteArticleEntry(row.id)"
             >
               下线
             </el-link>
             <el-link
               :underline="false"
               type="danger"
-              @click="deleteBanner(row.id)"
+              @click="deleteArticleEntry(row.id)"
             >
               删除
             </el-link>
@@ -87,10 +97,12 @@
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
 import EditContent from './EditContent'
+import SortEntry from './SortEntry'
 
 export default {
   components: {
     EditContent,
+    SortEntry,
   },
   setup(ctx, context) {
     const params = { ...context.root.$route.query, perPage: 10 }
@@ -98,9 +110,9 @@ export default {
     return result
   },
   methods: {
-    async deleteBanner(id) {
+    async deleteArticleEntry(id) {
       await this.$confirm('确定要删除吗')
-      api.deleteBanner(id).then(() => {
+      api.deleteArticleEntry(id).then(() => {
         this.$message.success('已删除')
         this.refetch()
       }, this.$error)

@@ -9,3 +9,7 @@ mutation updateBanner($input: UpdateBannerInput!) {
 mutation deleteBanner($input: DeleteBannerInput!) {
   deleteBanner(input: $input)
 }
+
+mutation sortBanner($input: SortBannerInput!) {
+  sortBanner(input: $input)
+}
