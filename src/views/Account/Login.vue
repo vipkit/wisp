@@ -71,14 +71,6 @@ export default {
     }
   },
   mounted() {
-    // const urlParams = new URLSearchParams(window.location.search)
-    // const tokenFromParams = urlParams.get('_tk')
-    // const localStorageToken = window.localStorage.wisp_token
-    // if (tokenFromParams && tokenFromParams !== localStorageToken) {
-    //   window.localStorage.wisp_token = `${tokenFromParams}`
-    //   window.location.reload()
-    //   return
-    // }
     if (window.localStorage.wisp_token) this.$router.push('/articles')
   },
   methods: {

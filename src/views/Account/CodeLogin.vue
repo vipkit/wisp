@@ -66,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    if (window.localStorage.wisp_token) this.$router.push('/')
+    if (window.localStorage.wisp_token) this.$router.push('/articles')
   },
   methods: {
     submit() {
