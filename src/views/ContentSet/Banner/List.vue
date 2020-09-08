@@ -122,7 +122,6 @@
   </el-container>
 </template>
 <script>
-import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
 import SortBanner from './SortBanner'
 import { useFetch } from '@/hooks'

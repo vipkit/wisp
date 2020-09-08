@@ -25,7 +25,7 @@
                 v-model.trim="form.code"
                 placeholder="请输入6位验证码"
               >
-                <send-code slot="append" :mobile="form.login" />
+                <SendCode slot="append" :mobile="form.login" />
               </el-input>
             </div>
           </el-form-item>

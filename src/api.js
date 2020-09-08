@@ -4,14 +4,10 @@ import * as mutation from './graphql/mutation.gql'
 const apiPath = process.env.API_ENV || 'https://api.zanquan.xyz'
 const API_URL = `${apiPath}/provider/graphql`
 
-// export const sendCode = mobile =>
-//   request(API_URL, mutation.SendCode, {
-//     mobile,
-//   }).then(({
-//     sendCode: {
-//       code
-//     }
-//   }) => code)
+export const sendCode = mobile =>
+  request(API_URL, mutation.sendCode, {
+    mobile,
+  })
 
 export const login = ({ mobile, code, password }) =>
   request(API_URL, mutation.login, {

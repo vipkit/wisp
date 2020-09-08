@@ -6,8 +6,6 @@ mutation login($input: LoginInput!) {
   }
 }
 
-mutation SendCode($mobile: Mobile!) {
-  sendCode(mobile: $mobile) {
-    code
-  }
+mutation sendCode($mobile: Mobile!) {
+  sendCode(mobile: $mobile)
 }
