@@ -49,33 +49,40 @@ export default {
   },
   watch: {
     data() {
-      this.form = this.data
+      const data = this.data
+      this.form = {
+        ...data,
+        merchantId: data.merchant.id,
+        isArticle: data.targetType === this.consts.ARTICLE,
+        targetType:
+          data.targetType === this.consts.ARTICLE ? null : data.targetType,
+      }
     },
   },
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
         if (!valid) return
-        const { id, name, linkCode, linkCodeData, image } = this.form
-        if (linkCode === this.consts.GOODS && !linkCodeData) {
-          this.$message('请先选择商品编号')
-          return
-        }
+        const {
+          id,
+          title,
+          imageUrl,
+          merchantId,
+          targetId,
+          targetType,
+          isArticle,
+        } = this.form
         const params = {
           id,
-          name,
-          linkCode,
-          linkCodeData:
-            linkCode === this.consts.GOODS_CATEGORY
-              ? linkCodeData && linkCodeData.length
-                ? linkCodeData[linkCodeData.length - 1].toString()
-                : null
-              : linkCodeData,
-          image,
+          title,
+          imageUrl,
+          merchantId,
+          targetId,
+          targetType: isArticle ? this.consts.ARTICLE : targetType,
         }
-        api.wxBannerEdit(params).then(() => {
+        api.updateBanner(params).then(() => {
           this.$message.success('成功')
-          this.$router.push({ name: this.name })
+          this.$router.push({ name: 'BannerList' })
         }, this.$error)
       })
     },

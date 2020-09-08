@@ -12,7 +12,7 @@
       <el-table v-if="data" :data="data.items">
         <el-table-column
           fixed="left"
-          prop="name"
+          prop="title"
           min-width="150"
           label="名称"
         />
@@ -21,7 +21,19 @@
           min-width="120"
           label="图片"
         >
-          {{ imageUrl }}
+          <el-popover placement="top" width="400">
+            <div class="flex justify-center">
+              <div>
+                <img :src="imageUrl" />
+              </div>
+            </div>
+            <img
+              slot="reference"
+              width="200"
+              class="cursor-pointer"
+              :src="imageUrl + '?imageMogr2/thumbnail/!40p'"
+            />
+          </el-popover>
         </el-table-column>
         <el-table-column
           v-slot="{ row: { merchant } }"
@@ -89,7 +101,7 @@ export default {
   methods: {
     async deleteBanner(id) {
       await this.$confirm('确定要删除吗')
-      api.deleteBanner(id).then(() => {
+      api.deleteBanner({ id }).then(() => {
         this.$message.success('已删除')
         this.refetch()
       }, this.$error)

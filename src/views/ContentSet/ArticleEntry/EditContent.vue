@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <div>
     <div v-if="create">
       <el-button type="primary" size="small" @click="editContent">
         新建
@@ -11,7 +11,7 @@
     <el-dialog
       :title="create ? '新建' : '编辑'"
       :visible.sync="visible"
-      width="500px"
+      width="600px"
       :before-close="close"
     >
       <el-form
@@ -22,13 +22,13 @@
       >
         <Fields :form="form" />
         <el-form-item>
-          <el-button size="small" type="primary" native-type="submit"
-            >保存</el-button
-          >
+          <el-button size="small" type="primary" native-type="submit">
+            保存
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-  </el-container>
+  </div>
 </template>
 <script>
 import Fields from './components/Fields'
@@ -51,15 +51,18 @@ export default {
   data() {
     return {
       form: {
-        publishAt: null,
-        targetId: null,
+        time: [],
+        articleIds: [],
       },
       visible: false,
     }
   },
   methods: {
     editContent() {
-      this.form = this.create ? this.form : this.info
+      const info = this.info
+      this.form = this.create
+        ? this.form
+        : { id: info.id, articleIds: info.articleIds }
       this.visible = true
     },
     close() {
@@ -69,16 +72,18 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          const { ...common } = this.form
+          const { id, articleIds } = this.form
           const params = {
-            ...common,
+            id,
+            articleIds,
           }
           const action = this.create
             ? api.createArticleEntry
             : api.editArticleEntry
           action(params).then(() => {
             this.$message.success('成功')
-            this.$router.push({ name: 'EntryList' })
+            this.$emit('refetch')
+            this.close()
           }, this.$error)
         }
       })

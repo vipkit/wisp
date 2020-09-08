@@ -73,7 +73,6 @@ export default {
   methods: {
     // 请求下一页的数据
     loadMore() {
-      console.log(this.loadMore)
       // 如果没有更多数据，则不请求
       if (!this.hasMore) {
         return
@@ -87,8 +86,9 @@ export default {
         page: this.page + 1,
         // more: true,
         q: this.keyword,
+        merchantId: this.merchantId,
       }
-      this.action(params).then(() => {
+      this.request(params).then(() => {
         this.loadMore.intercept = false
       })
     },
@@ -101,7 +101,6 @@ export default {
     handleSearch(keyword) {
       this.keyword = keyword
       this.loading = true
-      console.log(keyword)
       this.request({
         page: 1,
         keyword: keyword,

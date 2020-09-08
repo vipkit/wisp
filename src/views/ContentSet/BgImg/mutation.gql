@@ -1,11 +1,3 @@
-mutation createBanner($input: CreateBannerInput!) {
-  createBanner(input: $input)
-}
-
-mutation updateBanner($input: UpdateBannerInput!) {
-  updateBanner(input: $input)
-}
-
-mutation deleteBanner($input: DeleteBannerInput!) {
-  deleteBanner(input: $input)
+mutation setMemberBgImage($input: SetMemberBgImage!) {
+  setMemberBgImage(input: $input)
 }

@@ -3,26 +3,38 @@
     <el-header class="flex justify-between">
       <span>内容列表</span>
       <div class="flex">
-        <EditContent :create="true" />
+        <EditContent :create="true" @refetch="refetch" />
       </div>
     </el-header>
     <el-main class="main">
       <el-table v-if="data" :data="data.items">
         <el-table-column
           fixed="left"
-          prop="name"
+          prop="article.title"
           min-width="150"
           label="名称"
         />
         <el-table-column
-          v-slot="{ row: { imageUrl } }"
+          v-slot="{ row: { article: { imageUrl } } }"
           min-width="120"
           label="图片"
         >
-          {{ imageUrl }}
+          <el-popover placement="top" width="400">
+            <div class="flex justify-center">
+              <div>
+                <img :src="imageUrl" />
+              </div>
+            </div>
+            <img
+              slot="reference"
+              width="200"
+              class="cursor-pointer"
+              :src="imageUrl + '?imageMogr2/thumbnail/!40p'"
+            />
+          </el-popover>
         </el-table-column>
         <el-table-column
-          v-slot="{ row: { merchant } }"
+          v-slot="{ row: { article: { merchant } } }"
           min-width="120"
           label="关联商家"
         >
@@ -36,39 +48,36 @@
           {{ status }}
         </el-table-column>
         <el-table-column
-          v-slot="{ row: { id } }"
+          v-slot="{ row }"
           fixed="right"
           label="操作"
-          min-width="200"
+          min-width="240"
         >
-          <router-link
-            class="mr-4"
-            :to="{
-              name: 'EntryEdit',
-              params: { id },
-            }"
-          >
-            <el-link type="primary" class="mr-4">编辑</el-link>
-          </router-link>
-          <el-link
-            :underline="false"
-            class="mr-4"
-            type="danger"
-            @click="deleteBanner(id)"
-          >
-            上线
-          </el-link>
-          <el-link
-            :underline="false"
-            class="mr-4"
-            type="danger"
-            @click="deleteBanner(id)"
-          >
-            下线
-          </el-link>
-          <el-link :underline="false" type="danger" @click="deleteBanner(id)">
-            删除
-          </el-link>
+          <div class="flex">
+            <el-link
+              :underline="false"
+              class="mr-4"
+              type="danger"
+              @click="deleteBanner(row.id)"
+            >
+              上线
+            </el-link>
+            <el-link
+              :underline="false"
+              class="mr-4"
+              type="danger"
+              @click="deleteBanner(row.id)"
+            >
+              下线
+            </el-link>
+            <el-link
+              :underline="false"
+              type="danger"
+              @click="deleteBanner(row.id)"
+            >
+              删除
+            </el-link>
+          </div>
         </el-table-column>
       </el-table>
     </el-main>
