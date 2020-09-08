@@ -3,6 +3,7 @@
     <el-header class="flex justify-between">
       <span>轮播图</span>
       <div class="flex">
+        <SortBanner v-if="data" :banners="data.items" @refetch="refetch" />
         <router-link :to="{ name: 'BannerCreate' }">
           <el-button type="primary" size="small">新建轮播图</el-button>
         </router-link>
@@ -91,8 +92,12 @@
 <script>
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import SortBanner from './SortBanner'
 
 export default {
+  components: {
+    SortBanner,
+  },
   setup(ctx, context) {
     const params = { ...context.root.$route.query, perPage: 10 }
     const result = useQuery([], () => api.banners(params))
