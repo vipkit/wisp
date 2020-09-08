@@ -14,7 +14,7 @@
           <el-form-item label="手机号" prop="login" for="mobile">
             <el-input
               id="mobile"
-              v-model.trim="form.login"
+              v-model.trim="form.mobile"
               placeholder="请输入手机号码"
             />
           </el-form-item>
@@ -25,7 +25,7 @@
                 v-model.trim="form.code"
                 placeholder="请输入6位验证码"
               >
-                <SendCode slot="append" :mobile="form.login" />
+                <SendCode slot="append" :mobile="form.mobile" />
               </el-input>
             </div>
           </el-form-item>
@@ -56,11 +56,11 @@ export default {
   data() {
     return {
       form: {
-        login: '',
+        mobile: '',
         code: '',
       },
       rules: {
-        login: mobileValidator,
+        mobile: mobileValidator,
         code: codeValidator,
       },
     }

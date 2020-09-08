@@ -1,6 +1,5 @@
 <template>
   <el-header class="fixed left-0 right-0 border-bottom header" height="55px">
-    <!-- <el-row v-if="menus && hasMerchant" type="flex"> -->
     <el-row v-if="menus && hasMerchant" type="flex">
       <el-aside width="200px" class="logo justify-center items-center">
         <router-link to="/articles">
@@ -10,41 +9,8 @@
       <div
         style="padding-left: 10px"
         class="flex flex-grow w-full h-full header-nav items-center text-white"
-        :class="[
-          {
-            'justify-between': showIcon,
-          },
-        ]"
       >
-        <template v-if="showIcon && menusLimit">
-          <div class="flex h-full items-center">
-            <router-link
-              v-for="menu of menusLimit"
-              :key="'menus-limit' + menu.index"
-              :to="menu.menuItems[0].paths[0].path"
-              class="h-full pb-1 cursor text-base text-center hover:font-bold :opacity-100 hover:text-lg menu-item"
-            >
-              <div
-                :class="[
-                  {
-                    'border-b-2 border-white opacity-100 font-bold pb-2':
-                      activeIndex === menu.index,
-                  },
-                ]"
-              >
-                {{ menu.title }}
-              </div>
-            </router-link>
-            <div
-              style="width: 50px"
-              class="pb-3 h-full cursor-pointer text-center text-base menu-item hover:font-bold :opacity-100 hover:text-lg"
-              @click="drawer = true"
-            >
-              更多
-            </div>
-          </div>
-        </template>
-        <div v-if="!showIcon" class="flex items-center h-full">
+        <div class="flex items-center h-full">
           <router-link
             v-for="menu of menus"
             :key="'menu' + menu.index"
@@ -88,40 +54,6 @@
         </div>
       </div>
     </el-row>
-    <el-drawer
-      :append-to-body="true"
-      :with-header="false"
-      :visible.sync="drawer"
-      direction="rtl"
-      :size="'300px'"
-    >
-      <div class="w-full h-full bg-primary-normal text-white">
-        <div class="flex flex-wrap">
-          <div
-            v-for="menu of menus"
-            :key="'menu-right' + menu.index"
-            class="w-1/2 p-4"
-          >
-            <div
-              :to="menu.menuItems[0].paths[0].path"
-              class="pb-1 cursor text-base text-center hover:font-bold :opacity-100 hover:text-lg"
-              @click="() => newPath(menu.menuItems[0].paths[0].path)"
-            >
-              <div
-                :class="[
-                  {
-                    'border-b-2 border-white opacity-100 font-bold pb-2':
-                      activeIndex === menu.index,
-                  },
-                ]"
-              >
-                {{ menu.title }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </el-drawer>
   </el-header>
 </template>
 <script>
@@ -131,9 +63,6 @@ export default {
     return {
       menus: null,
       activeIndex: null,
-      drawer: false,
-      bodyVisibleWidth: null,
-      visible: false,
     }
   },
   computed: {
@@ -142,23 +71,6 @@ export default {
       return account
     },
     ...mapGetters(['account']),
-    showIcon() {
-      if (!this.menus) {
-        return
-      }
-      const headerWidth =
-        this.menus.length * 80 + this.menus.length * 8 + 200 + 180 + 10
-      return this.bodyVisibleWidth < headerWidth
-    },
-    menusLimit() {
-      if (!this.bodyVisibleWidth) return null
-      if (!this.showIcon) return null
-      const limitLength = Math.floor(
-        (this.bodyVisibleWidth - 380 - 50 - 10) / 88
-      )
-      const limitMenus = this.menus.slice(0, limitLength)
-      return limitMenus
-    },
   },
   watch: {
     '$route.name'() {
@@ -170,29 +82,12 @@ export default {
     hasMerchant() {
       this.initMenus()
     },
-    merchant() {
-      this.initMenus()
-    },
     menus() {
       this.initMenus()
-    },
-
-    bodyVisibleWidth: {
-      handler(newValue, oldValue) {
-        this.showIcon
-        this.menusLimit
-      },
-      deep: true,
     },
   },
   mounted() {
     this.initMenus()
-    this.bodyVisibleWidth = document.body.clientWidth
-    window.onresize = () => {
-      return (() => {
-        this.bodyVisibleWidth = document.body.clientWidth
-      })()
-    }
   },
   methods: {
     async initMenus() {
@@ -247,10 +142,6 @@ export default {
       this.$store.dispatch('signout').then(() => {
         this.$router.push('/login')
       })
-    },
-    newPath(path) {
-      this.$router.push(path)
-      this.drawer = false
     },
   },
 }

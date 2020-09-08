@@ -11,10 +11,10 @@
           label-width="80px"
           @submit.prevent.native="submit"
         >
-          <el-form-item label="账号" for="login" prop="login">
+          <el-form-item label="账号" for="login" prop="mobile">
             <el-input
               id="login"
-              v-model.trim="form.login"
+              v-model.trim="form.mobile"
               placeholder="请输入注册手机号码/商家用户名"
             />
           </el-form-item>
@@ -53,11 +53,11 @@ export default {
   data() {
     return {
       form: {
-        login: '',
+        mobile: '',
         password: '',
       },
       rules: {
-        login: {
+        mobile: {
           required: true,
           message: '账号不能为空',
           trigger: 'blur',
