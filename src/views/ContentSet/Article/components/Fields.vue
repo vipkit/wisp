@@ -158,7 +158,7 @@ export default {
     }
   },
   methods: {
-    getGoods({ page = 1, goodsMore = false, keyword = '' } = {}) {
+    getGoods({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -167,22 +167,14 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
-          console.log(items)
-          console.log(this.goods)
-          if (goodsMore) {
-            this.goods = [...this.data, ...items]
-          } else {
-            this.goods = items
-          }
-          console.log(this.goods)
-          this.goodsMore = page * 10 < total
+          this.goods = [...this.goods, ...items]
+          this.goodsMore = this.goods.length < total
           this.goodsPage = page
-
           resolve()
         })
       })
     },
-    getCoupon({ page = 1, couponMore = false, keyword = '' } = {}) {
+    getCoupon({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -191,12 +183,8 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
-          if (couponMore) {
-            this.coupons = [...this.coupons, ...items]
-          } else {
-            this.coupons = items
-          }
-          this.couponMore = page * 10 < total
+          this.coupons = [...this.coupons, ...items]
+          this.couponMore = this.coupons.length < total
           this.coupnPage = page
           resolve()
         })

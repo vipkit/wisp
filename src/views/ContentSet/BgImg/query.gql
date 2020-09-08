@@ -1,29 +1,5 @@
-query banner($id: Int!) {
-  banner(id: $id) {
-    id
-    title
-    imageUrl
-    merchant {
-      id
-      name
-    }
-    targetType
-    targetId
-  }
-}
-query banners($params: BannerParams) {
-  banners(params: $params) {
-    total
-    items {
-      id
-      title
-      imageUrl
-      merchant {
-        id
-        name
-      }
-      targetType
-      targetId
-    }
+query memberBgImage {
+  viewer {
+    memberBgImage
   }
 }

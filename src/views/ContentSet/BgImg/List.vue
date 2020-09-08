@@ -7,18 +7,18 @@
       <detail-item title="会员背景图">
         <div>
           <div>
-            <div v-if="form.erweihuoHeaderBg">
+            <div v-if="form.memberBgImage">
               <el-popover placement="top" width="400">
                 <div class="flex justify-center">
                   <div>
-                    <img :src="form.imageUrl" />
+                    <img :src="form.memberBgImage" />
                   </div>
                 </div>
                 <img
                   slot="reference"
                   width="200"
                   class="cursor-pointer"
-                  :src="form.imageUrl + '?imageMogr2/thumbnail/!40p'"
+                  :src="form.memberBgImage + '?imageMogr2/thumbnail/!40p'"
                 />
               </el-popover>
             </div>
@@ -28,13 +28,18 @@
             <span class="text-sm text-gray-600">图片建议比例：750px*130px</span>
           </div>
           <div class="flex my-6">
-            <image-uploader v-model="form.imageUrl" :type="'text'" class="mr-4">
-              <el-button type="primary" size="mini">{{
-                form.erweihuoHeaderBg ? '修改' : '上传'
-              }}</el-button>
+            <image-uploader
+              v-model="form.memberBgImage"
+              :type="'text'"
+              class="mr-4"
+              @change="uploadSuccess"
+            >
+              <el-button type="primary" size="mini">
+                {{ form.memberBgImage ? '修改' : '上传' }}
+              </el-button>
             </image-uploader>
             <el-button
-              v-if="form.imageUrl"
+              v-if="form.memberBgImage"
               type="primary"
               size="mini"
               plain
@@ -55,38 +60,48 @@ export default {
   data() {
     return {
       form: {
-        imageUrl: null,
+        memberBgImage: null,
       },
     }
   },
-  //   setup(ctx, context) {
-  //     const result = useQuery([], () => api.bgimg(params))
-  //     return {
-  //       bgimg: result.data,
-  //     }
-  //   },
+  setup(ctx, context) {
+    const result = useQuery([], api.memberBgImage)
+    return {
+      ...result,
+      bgimg: result.data,
+    }
+  },
   watch: {
     bgimg() {
+      console.log(this.bgimg)
       this.form = {
-        imageUrl: this.bgimg,
+        memberBgImage: this.bgimg,
       }
     },
   },
   methods: {
     handleUploadSuccess() {
-      const { imageUrl } = this.form
+      const { memberBgImage } = this.form
+      console.log(memberBgImage)
       api
-        .setBgImg({
-          imageUrl,
+        .setMemberBgImage({
+          memberBgImage,
         })
         .then(() => {
           this.$message.success('成功')
           this.refetch()
         }, this.$error)
     },
+
+    uploadSuccess(url) {
+      this.form = {
+        memberBgImage: url,
+      }
+      this.handleUploadSuccess()
+    },
     async resetBg() {
       await this.$confirm('是否确认重置会员背景图')
-      this.form.imageUrl = ''
+      this.form.memberBgImage = ''
       this.handleUploadSuccess()
     },
   },
