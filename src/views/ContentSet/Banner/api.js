@@ -6,9 +6,7 @@ const apiPath = process.env.API_ENV || 'https://api.zanquan.xyz'
 const API_URL = `${apiPath}/provider/graphql`
 
 export const banners = params =>
-  request(API_URL, query.banners, {
-    params,
-  }).then(({ banners }) => banners)
+  request(API_URL, query.banners, params).then(({ banners }) => banners)
 
 export const banner = id =>
   request(API_URL, query.banner, {
@@ -32,5 +30,10 @@ export const deleteBanner = id =>
 
 export const sortBanner = params =>
   request(API_URL, mutation.sortBanner, {
+    input: params,
+  })
+
+export const changeBannerStatus = params =>
+  request(API_URL, mutation.changeBannerStatus, {
     input: params,
   })

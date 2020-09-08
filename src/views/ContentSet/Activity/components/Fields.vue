@@ -138,7 +138,7 @@ export default {
       perPage: 99,
     }
     const result = useQuery([], context.root.api.merchants)
-    const articles = useQuery([], () => context.root.api.articles(params))
+    const articles = useQuery([], () => context.root.api.articles({ params }))
     return {
       ...result,
       merchants: result.data,

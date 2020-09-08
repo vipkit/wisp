@@ -3,6 +3,12 @@
     <el-header class="flex justify-between">
       <span>活动列表</span>
       <div class="flex">
+        <SortActivity
+          v-if="data"
+          class="mr-2"
+          :activities="data.items"
+          @refetch="refetch"
+        />
         <router-link :to="{ name: 'ActivityCreate' }">
           <el-button type="primary" size="small">新建活动</el-button>
         </router-link>
@@ -42,13 +48,7 @@
         >
           {{ merchant.name }}
         </el-table-column>
-        <el-table-column
-          v-slot="{ row: { status } }"
-          min-width="120"
-          label="状态"
-        >
-          {{ status }}
-        </el-table-column>
+        <el-table-column min-width="120" label="状态"> 已发布 </el-table-column>
         <el-table-column
           v-slot="{ row: { id } }"
           fixed="right"
@@ -64,39 +64,30 @@
           >
             <el-link type="primary" class="mr-4">编辑</el-link>
           </router-link>
-          <el-link
-            :underline="false"
-            class="mr-4"
-            type="danger"
-            @click="deleteActivity(id)"
-          >
-            上线
-          </el-link>
-          <el-link
-            :underline="false"
-            class="mr-4"
-            type="danger"
-            @click="deleteActivity(id)"
-          >
-            下线
-          </el-link>
           <el-link :underline="false" type="danger" @click="deleteActivity(id)">
             删除
           </el-link>
         </el-table-column>
       </el-table>
+      <Pagination v-if="data && data.total" :total="data.total" />
     </el-main>
   </el-container>
 </template>
 <script>
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import SortActivity from './SortActivity'
+import { useFetch } from '@/hooks.js'
 
 export default {
-  setup(ctx, context) {
-    const params = { ...context.root.$route.query, perPage: 10 }
-    const result = useQuery([], () => api.activities(params))
-    return result
+  components: {
+    SortActivity,
+  },
+  setup(props, context) {
+    return useFetch(() => ({
+      api: api.activities,
+      params: { ...context.root.$route.query },
+    }))
   },
   methods: {
     async deleteActivity(id) {

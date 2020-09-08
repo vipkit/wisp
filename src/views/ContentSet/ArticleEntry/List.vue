@@ -42,13 +42,6 @@
           {{ merchant.name }}
         </el-table-column>
         <el-table-column
-          v-slot="{ row: { status } }"
-          min-width="120"
-          label="状态"
-        >
-          {{ status }}
-        </el-table-column>
-        <el-table-column
           v-slot="{ row }"
           fixed="right"
           label="操作"
@@ -66,22 +59,6 @@
             </router-link>
             <el-link
               :underline="false"
-              class="mr-4"
-              type="primary"
-              @click="deleteArticleEntry(row.id)"
-            >
-              上线
-            </el-link>
-            <el-link
-              :underline="false"
-              class="mr-4"
-              type="danger"
-              @click="deleteArticleEntry(row.id)"
-            >
-              下线
-            </el-link>
-            <el-link
-              :underline="false"
               type="danger"
               @click="deleteArticleEntry(row.id)"
             >
@@ -90,6 +67,7 @@
           </div>
         </el-table-column>
       </el-table>
+      <Pagination v-if="data && data.total" :total="data.total" />
     </el-main>
   </el-container>
 </template>
@@ -98,16 +76,18 @@ import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
 import EditContent from './EditContent'
 import SortEntry from './SortEntry'
+import { useFetch } from '@/hooks.js'
 
 export default {
   components: {
     EditContent,
     SortEntry,
   },
-  setup(ctx, context) {
-    const params = { ...context.root.$route.query, perPage: 10 }
-    const result = useQuery([], () => api.articlreEntries(params))
-    return result
+  setup(props, context) {
+    return useFetch(() => ({
+      api: api.articlreEntries,
+      params: { ...context.root.$route.query },
+    }))
   },
   methods: {
     async deleteArticleEntry(id) {

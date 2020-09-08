@@ -26,21 +26,20 @@
               type="password"
             />
           </el-form-item>
-          <el-button type="primary" class="load" native-type="submit"
-            >登录
+          <el-button type="primary" class="load" native-type="submit">
+            登录
           </el-button>
-          <div class="flex flex-end">
-            <router-link
-              to="/code_login"
-              class="greyLink hover:text-primary-normal darkgrey font-size-sm m-y-md"
-            >
+          <div class="flex flex-row-reverse">
+            <router-link to="/code_login" class="text-gray-700 text-sm my-2">
               验证码登录
             </router-link>
           </div>
         </el-form>
       </div>
     </div>
-    <PageFooter />
+    <div class="flex justify-center">
+      <PageFooter />
+    </div>
   </div>
 </template>
 <script>

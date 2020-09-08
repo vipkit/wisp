@@ -9,3 +9,7 @@ mutation updateActivity($input: UpdateBannerInput!) {
 mutation deleteActivity($input: DeleteActivityInput!) {
   deleteActivity(input: $input)
 }
+
+mutation sortActivity($input: SortActivityInput!) {
+  sortActivity(input: $input)
+}

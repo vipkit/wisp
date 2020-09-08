@@ -52,9 +52,9 @@ export default {
   },
   setup(ctx, context) {
     const params = {
-      perPage: 99,
+      perPage: 999,
     }
-    return useQuery([], () => context.root.api.articles(params))
+    return useQuery([], () => context.root.api.articles({ params }))
   },
   watch: {
     data() {
@@ -69,7 +69,7 @@ export default {
         publishAtTo,
         perPage: 999,
       }
-      this.api.articles(params).then(({ items }) => {
+      this.api.articles({ params }).then(({ items }) => {
         this.articles = items
         console.log(items)
       }, this.$error)

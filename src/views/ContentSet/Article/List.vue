@@ -9,6 +9,24 @@
       </div>
     </el-header>
     <el-main class="main">
+      <Route v-slot="{ query, reset }">
+        <el-form
+          inline
+          @submit.native.prevent="query({ ...filters }).catch(refetch)"
+        >
+          <el-form-item label="标题">
+            <el-input v-model="filters.q" placeholder="标题" />
+          </el-form-item>
+          <el-form-item>
+            <el-button native-type="submit" type="primary" size="mini"
+              >查询</el-button
+            >
+            <el-button size="mini" @click="reset((filters = {}))"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </Route>
       <el-table v-if="data" :data="data.items">
         <el-table-column
           fixed="left"
@@ -31,13 +49,6 @@
           {{ merchant.name }}
         </el-table-column>
         <el-table-column
-          v-slot="{ row: { type } }"
-          min-width="120"
-          label="关联小程序"
-        >
-          {{ type }}
-        </el-table-column>
-        <el-table-column
           v-slot="{ row: { id } }"
           fixed="right"
           label="操作"
@@ -56,18 +67,20 @@
           </el-link>
         </el-table-column>
       </el-table>
+      <Pagination v-if="data && data.total" :total="data.total" />
     </el-main>
   </el-container>
 </template>
 <script>
-import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import { useFetch } from '@/hooks'
 
 export default {
-  setup(ctx, context) {
-    const params = { ...context.root.$route.query, perPage: 10 }
-    const result = useQuery([], () => context.root.api.articles(params))
-    return result
+  setup(props, context) {
+    return useFetch(() => ({
+      api: context.root.api.articles,
+      params: { ...context.root.$route.query },
+    }))
   },
   methods: {
     async deleteArticle(id) {

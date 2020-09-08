@@ -1,45 +1,23 @@
 <template>
-  <el-pagination
-    v-if="total"
-    :total="total"
-    :page-size="currentPerPage"
-    :current-page.sync="currentPage"
-    class="center m-y-md"
-    layout="prev, pager, next,sizes"
-    :page-sizes="[10, 20, 30, 40, 50, 100]"
-    @current-change="onPageChange"
-    @size-change="onPageSizeChange"
-  />
+  <Route v-if="total" v-slot="{ query }" class="flex justify-center my-4">
+    <el-pagination
+      :total="total"
+      :current-page="+$route.query.page || 1"
+      :page-size="+$route.query.perPage || 10"
+      layout="prev, pager, next,sizes"
+      :page-sizes="[10, 20, 30, 40, 50, 100]"
+      @current-change="page => query({ page })"
+      @size-change="perPage => query({ perPage })"
+    />
+  </Route>
 </template>
 
 <script>
+import Route from './RouteWrapper'
 export default {
-  props: {
-    total: { type: Number, required: true },
-    pageSize: { type: Number, required: false, default: 10 },
-    page: { type: Number, required: false, default: 1 },
-  },
-  data() {
-    return {
-      currentPage: 1,
-      currentPerPage: 10,
-    }
-  },
-  watch: {
-    page() {
-      this.currentPage = this.page
-    },
-    pageSize() {
-      this.currentPerPage = this.pageSize
-    },
-  },
-  methods: {
-    onPageChange: function (page) {
-      this.$emit('page-change', page)
-    },
-    onPageSizeChange: function (size) {
-      this.$emit('page-size-change', size)
-    },
-  },
+  components: { Route },
+  props: ['total'],
 }
 </script>
+
+<style lang="scss" scoped></style>
