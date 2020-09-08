@@ -70,7 +70,7 @@
           prop="targetType"
           :rules="[{ required: true, message: '请选择跳转类型' }]"
         >
-          <el-select v-model="form.targetType">
+          <el-select v-model="form.targetType" @change="changeTargetType">
             <el-option
               v-for="(key, value) of consts.ProviderLinkTargetEnum"
               :key="key"
@@ -125,12 +125,24 @@ export default {
   },
   data() {
     return {
-      goods: [],
-      coupons: [],
+      goods: null,
+      coupons: null,
       couponMore: true,
       couponPage: 1,
       goodsMore: true,
       goodsPage: 1,
+      isInit: true,
+    }
+  },
+  mounted() {
+    if (this.isInit && this.form.merchantId) {
+      this.isInit = false
+      if (this.form.targetType === this.consts.COUPON) {
+        this.getCoupon()
+      }
+      if (this.form.targetType === this.consts.GOODS) {
+        this.getGoods()
+      }
     }
   },
   setup(ctx, context) {
@@ -147,7 +159,7 @@ export default {
     }
   },
   methods: {
-    getGoods({ page = 1, goodsMore = false, keyword = '' } = {}) {
+    getGoods({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -156,18 +168,15 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
-          if (goodsMore) {
-            this.goods = [...this.data, ...items]
-          } else {
-            this.goods = items
-          }
-          this.goodsMore = page * 10 < total
+          const goods = this.goods || []
+          this.goods = [...goods, ...items]
+          this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
         })
       })
     },
-    getCoupon({ page = 1, couponMore = false, keyword = '' } = {}) {
+    getCoupon({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -176,12 +185,9 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
-          if (couponMore) {
-            this.coupons = [...this.coupons, ...items]
-          } else {
-            this.coupons = items
-          }
-          this.couponMore = page * 10 < total
+          const coupons = this.coupons || []
+          this.coupons = [...coupons, ...items]
+          this.couponMore = this.coupons.length < total
           this.coupnPage = page
           resolve()
         })
@@ -195,6 +201,15 @@ export default {
     changeType() {
       this.form.targetType = null
       this.form.targetId = null
+    },
+    changeTargetType() {
+      this.form.targetId = null
+      if ([this.consts.GOODS].includes(this.form.targetType)) {
+        this.getGoods()
+      }
+      if ([this.consts.COUPON].includes(this.form.targetType)) {
+        this.getCoupon()
+      }
     },
   },
 }

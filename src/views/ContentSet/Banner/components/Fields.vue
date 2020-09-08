@@ -70,7 +70,7 @@
           prop="targetType"
           :rules="[{ required: true, message: '请选择跳转类型' }]"
         >
-          <el-select v-model="form.targetType">
+          <el-select v-model="form.targetType" @change="changeTargetType">
             <el-option
               v-for="(key, value) of consts.ProviderLinkTargetEnum"
               :key="key"
@@ -171,7 +171,7 @@ export default {
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
           const goods = this.goods || []
-          this.goods = [...this.goods, ...items]
+          this.goods = [...goods, ...items]
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -203,6 +203,15 @@ export default {
     changeType() {
       this.form.targetType = null
       this.form.targetId = null
+    },
+    changeTargetType() {
+      this.form.targetId = null
+      if ([this.consts.GOODS].includes(this.form.targetType)) {
+        this.getGoods()
+      }
+      if ([this.consts.COUPON].includes(this.form.targetType)) {
+        this.getCoupon()
+      }
     },
   },
 }

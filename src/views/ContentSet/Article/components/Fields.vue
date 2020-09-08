@@ -146,12 +146,10 @@ export default {
     return {
       goods: null,
       coupons: null,
-      couponsInit: true,
       couponMore: true,
       couponPage: 1,
       goodsMore: true,
       goodsPage: 1,
-      goodsInit: true,
       isInit: true,
     }
   },
@@ -165,12 +163,8 @@ export default {
   mounted() {
     if (this.isInit && this.form.merchantId) {
       this.isInit = false
-      if (this.form.targetType === this.consts.COUPON) {
-        this.getCoupon()
-      }
-      if (this.form.targetType === this.consts.GOODS) {
-        this.getGoods()
-      }
+      this.getCoupon()
+      this.getGoods()
     }
   },
   methods: {
@@ -184,7 +178,7 @@ export default {
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
           const goods = this.goods || []
-          this.goods = [...this.goods, ...items]
+          this.goods = [...goods, ...items]
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -215,6 +209,12 @@ export default {
     },
     changeTargetType() {
       this.form.targetId = null
+      if ([this.consts.GOODS].includes(this.form.targetType)) {
+        this.getGoods()
+      }
+      if ([this.consts.COUPON].includes(this.form.targetType)) {
+        this.getCoupon()
+      }
     },
   },
 }
