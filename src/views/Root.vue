@@ -14,7 +14,7 @@ import { mapState } from 'vuex'
 
 export default {
   components: {
-    MainPage: MainPage,
+    MainPage,
     Login,
   },
   computed: {

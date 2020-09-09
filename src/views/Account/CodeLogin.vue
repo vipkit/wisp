@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen w-full">
     <div class="flex-1 flex items-center justify-center">
       <div class="form bg-white shadow-lg">
         <el-form
