@@ -113,7 +113,6 @@ export default {
         )
         .flatMap(item => item.flatMap(path => path))
         .find(menu => this.$route.path.startsWith(menu.path))
-
       if (!activeNav) {
         return
       }
