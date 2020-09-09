@@ -3,7 +3,9 @@
     <HomeHeader />
     <el-container class="relative">
       <SideMenu />
-      <el-main class="main-content absolute right-0 bottom-0 border-red">
+      <el-main
+        class="main-content absolute right-0 bottom-0 border-red bg-gray-100"
+      >
         <router-view />
       </el-main>
     </el-container>

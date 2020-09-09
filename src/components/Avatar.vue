@@ -1,16 +1,12 @@
 <template>
   <div>
-    <div v-if="user && user.profile" class="flex align-center">
-      <img
-        v-if="user.profile.avatarUrl"
-        :src="user.profile.avatarUrl"
-        class="avatar m-r-md"
-      />
-      <img v-else src="@/assets/wx-default-avatar.jpg" class="avatar m-r-md" />
-      <span class="data-value">{{ user | nickName }}</span>
+    <div v-if="user" class="flex items-center">
+      <img v-if="user.avatarUrl" :src="user.avatarUrl" class="avatar mr-2" />
+      <img v-else src="@/assets/wx-default-avatar.jpg" class="avatar mr-2" />
+      <span class="data-value">{{ user.nickName }}</span>
     </div>
-    <div v-else class="flex align-center">
-      <img src="@/assets/wx-default-avatar.jpg" class="avatar m-r-md" />
+    <div v-else class="flex items-center">
+      <img src="@/assets/wx-default-avatar.jpg" class="avatar mr-2" />
       <span class="data-value">匿名用户</span>
     </div>
   </div>
