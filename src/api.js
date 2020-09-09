@@ -26,10 +26,10 @@ export const login = ({ mobile, code, password }) =>
 export const qiniuToken = () =>
   request(API_URL, query.qiniuToken).then(({ qiniuToken }) => qiniuToken)
 
-export const merchants = params =>
-  request(API_URL, query.merchants, {
-    params,
-  }).then(({ viewer: { merchants } }) => merchants)
+export const merchants = () =>
+  request(API_URL, query.merchants).then(
+    ({ viewer: { merchants } }) => merchants
+  )
 
 export const account = params =>
   request(API_URL, query.name, {

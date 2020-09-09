@@ -23,7 +23,7 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">图片建议尺寸：690*280</span>
+      <span class="text-sm text-gray-600">图片建议尺寸：690*280</span>
     </el-form-item>
     <el-form-item
       label="关联商家"

@@ -25,7 +25,7 @@
             <span v-else class="data-value">无</span>
           </div>
           <div class="mt-2">
-            <span class="text-sm text-gray-600">图片建议比例：750px*130px</span>
+            <span class="text-sm text-gray-600">图片建议尺寸：750*460</span>
           </div>
           <div class="flex my-6">
             <image-uploader

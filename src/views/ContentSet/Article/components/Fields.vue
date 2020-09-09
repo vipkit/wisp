@@ -23,7 +23,7 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">图片建议尺寸：200*220</span>
+      <span class="text-sm text-gray-600">图片建议尺寸：200*220</span>
     </el-form-item>
     <el-form-item
       label="关联商家"
@@ -90,7 +90,10 @@
     <el-form-item
       label="互动文案"
       prop="actionButtonText"
-      :rules="[{ required: true, message: '请输入互动文案' }]"
+      :rules="[
+        { required: true, message: '请输入互动文案' },
+        { max: 20, message: '不能超过20字' },
+      ]"
     >
       <el-input
         v-model="form.actionButtonText"
