@@ -3,6 +3,13 @@ query merchants {
     merchants {
       id
       name
+      city {
+        id
+        name
+      }
+      brandImage
+      brandDescription
+      companyName
     }
   }
 }

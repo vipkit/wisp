@@ -23,7 +23,7 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">图片建议尺寸：200*220</span>
+      <span class="text-sm text-gray-600">图片建议尺寸：200*220</span>
     </el-form-item>
     <el-form-item
       label="关联商家"
@@ -90,7 +90,10 @@
     <el-form-item
       label="互动文案"
       prop="actionButtonText"
-      :rules="[{ required: true, message: '请输入互动文案' }]"
+      :rules="[
+        { required: true, message: '请输入互动文案' },
+        { max: 20, message: '不能超过20字' },
+      ]"
     >
       <el-input
         v-model="form.actionButtonText"
@@ -167,6 +170,7 @@ export default {
   },
   methods: {
     getGoods({ page = 1, keyword = '' } = {}) {
+      console.log(keyword)
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -176,7 +180,11 @@ export default {
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
           const goods = this.goods || []
-          this.goods = [...goods, ...items]
+          if (keyword) {
+            this.goods = [...items]
+          } else {
+            this.goods = [...goods, ...items]
+          }
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -193,7 +201,11 @@ export default {
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
           const coupons = this.coupons || []
-          this.coupons = [...coupons, ...items]
+          if (keyword) {
+            this.coupons = [...items]
+          } else {
+            this.coupons = [...coupons, ...items]
+          }
           this.couponMore = this.coupons.length < total
           this.coupnPage = page
 

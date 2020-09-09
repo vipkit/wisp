@@ -23,14 +23,11 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">图片建议尺寸：690*280</span>
+      <span class="text-sm text-gray-600">图片建议尺寸：690*280</span>
     </el-form-item>
-    <el-form-item
-      label="关联商家"
-      prop="merchantId"
-      :rules="[{ required: true, message: '请选择关联商家' }]"
-    >
+    <el-form-item label="关联商家" prop="merchantId">
       <el-select v-model="form.merchantId" @change="changeMerchant">
+        <el-option :value="null" label="无" />
         <el-option
           v-for="(merchant, index) of merchants"
           :key="index"
@@ -39,14 +36,13 @@
         />
       </el-select>
     </el-form-item>
-    <div v-if="form.merchantId">
+    <template v-if="form.merchantId">
       <el-form-item label="跳转类型" prop="isArticle">
         <el-radio-group v-model="form.isArticle" @change="changeType">
           <el-radio :label="true">图文内容</el-radio>
           <el-radio :label="false">商家活动</el-radio>
         </el-radio-group>
       </el-form-item>
-
       <el-form-item
         v-if="form.isArticle && articles"
         label="图文内容"
@@ -108,7 +104,7 @@
           />
         </el-form-item>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 <script>
@@ -165,7 +161,11 @@ export default {
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
           const goods = this.goods || []
-          this.goods = [...goods, ...items]
+          if (keyword) {
+            this.goods = [...items]
+          } else {
+            this.goods = [...goods, ...items]
+          }
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -182,7 +182,11 @@ export default {
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
           const coupons = this.coupons || []
-          this.coupons = [...coupons, ...items]
+          if (keyword) {
+            this.coupons = [...items]
+          } else {
+            this.coupons = [...coupons, ...items]
+          }
           this.couponMore = this.coupons.length < total
           this.coupnPage = page
           resolve()

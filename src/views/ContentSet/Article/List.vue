@@ -17,6 +17,16 @@
           <el-form-item label="标题">
             <el-input v-model="filters.q" placeholder="标题" />
           </el-form-item>
+          <el-form-item label="关联商家">
+            <el-select v-model="filters.merchantId" placeholder="请选择">
+              <el-option
+                v-for="(merchant, index) of merchants"
+                :key="index"
+                :label="merchant.name"
+                :value="merchant.id"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button native-type="submit" type="primary" size="mini"
               >查询</el-button
@@ -43,7 +53,7 @@
         </el-table-column>
         <el-table-column
           v-slot="{ row: { merchant } }"
-          min-width="120"
+          min-width="150"
           label="关联商家"
         >
           {{ merchant.name }}
@@ -52,7 +62,7 @@
           v-slot="{ row: { id } }"
           fixed="right"
           label="操作"
-          min-width="200"
+          min-width="120"
         >
           <router-link
             :to="{
@@ -77,10 +87,16 @@ import { useFetch } from '@/hooks'
 
 export default {
   setup(props, context) {
-    return useFetch(() => ({
-      api: context.root.api.articles,
-      params: { ...context.root.$route.query },
+    const { data: merchants } = useFetch(() => ({
+      api: context.root.api.merchants,
     }))
+    return {
+      merchants,
+      ...useFetch(() => ({
+        api: context.root.api.articles,
+        params: { ...context.root.$route.query },
+      })),
+    }
   },
   methods: {
     async deleteArticle(id) {
