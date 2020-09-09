@@ -46,7 +46,7 @@
           min-width="120"
           label="关联商家"
         >
-          {{ merchant.name }}
+          {{ merchant ? merchant.name : '无' }}
         </el-table-column>
         <el-table-column min-width="120" label="状态"> 已发布 </el-table-column>
         <el-table-column

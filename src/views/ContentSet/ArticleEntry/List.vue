@@ -8,6 +8,31 @@
       </div>
     </el-header>
     <el-main class="main">
+      <Route v-slot="{ query, reset }">
+        <el-form
+          inline
+          @submit.native.prevent="query({ ...filters }).catch(refetch)"
+        >
+          <el-form-item label="关联商家">
+            <el-select v-model="filters.merchantId" placeholder="请选择">
+              <el-option
+                v-for="(merchant, index) of merchants"
+                :key="index"
+                :label="merchant.name"
+                :value="merchant.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button native-type="submit" type="primary" size="mini">
+              查询
+            </el-button>
+            <el-button size="mini" @click="reset((filters = {}))">
+              重置
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </Route>
       <el-table v-if="data" :data="data.items">
         <el-table-column
           fixed="left"
@@ -84,10 +109,16 @@ export default {
     SortEntry,
   },
   setup(props, context) {
-    return useFetch(() => ({
-      api: api.articlreEntries,
-      params: { ...context.root.$route.query },
+    const { data: merchants } = useFetch(() => ({
+      api: context.root.api.merchants,
     }))
+    return {
+      merchants,
+      ...useFetch(() => ({
+        api: api.articlreEntries,
+        params: { ...context.root.$route.query },
+      })),
+    }
   },
   methods: {
     async deleteArticleEntry(id) {

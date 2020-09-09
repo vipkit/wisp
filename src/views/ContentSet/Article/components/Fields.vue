@@ -170,6 +170,7 @@ export default {
   },
   methods: {
     getGoods({ page = 1, keyword = '' } = {}) {
+      console.log(keyword)
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -179,7 +180,11 @@ export default {
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
           const goods = this.goods || []
-          this.goods = [...goods, ...items]
+          if (keyword) {
+            this.goods = [...items]
+          } else {
+            this.goods = [...goods, ...items]
+          }
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -196,7 +201,11 @@ export default {
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
           const coupons = this.coupons || []
-          this.coupons = [...coupons, ...items]
+          if (keyword) {
+            this.coupons = [...items]
+          } else {
+            this.coupons = [...coupons, ...items]
+          }
           this.couponMore = this.coupons.length < total
           this.coupnPage = page
 
