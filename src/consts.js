@@ -12,7 +12,7 @@ export const COUPON = 'COUPON'
 export const ARTICLE = 'ARTICLE'
 
 export const ProviderBannerStatusEnum = {
-  DRAFT: '编辑',
+  // DRAFT: '编辑',
   ONLINE: '已发布',
   OFFLINE: '下线',
 }

@@ -1,35 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Root from '@/views/Root'
-import {
-  store
-} from './store'
+import { store } from './store'
 
-import {
-  childRoutes
-} from './routes'
+import { childRoutes } from './routes'
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  {
+    path: '',
+    redirect: '/articles',
+    component: Root,
+  },
+  {
     path: '/',
     name: 'home',
-    redirect: '/artilces',
+    redirect: '/articles',
     component: Root,
     children: childRoutes,
   },
   {
     path: '/login',
     component: () =>
-      import( /* webpackChunkName: "Login" */ './views/Account/Login'),
+      import(/* webpackChunkName: "Login" */ './views/Account/Login'),
   },
   {
     path: '/code_login',
     component: () =>
-      import( /* webpackChunkName: "CodeLogin" */ './views/Account/CodeLogin'),
+      import(/* webpackChunkName: "CodeLogin" */ './views/Account/CodeLogin'),
   },
   {
     path: '*',
@@ -43,7 +45,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (
-    to.matched.some(record => record.path === '*') || ['/login', '/code_login', '/'].includes(to.path) ||
+    to.matched.some(record => record.path === '*') ||
+    ['/login', '/code_login', '/'].includes(to.path) ||
     store.state.isLogin
   ) {
     next()

@@ -23,9 +23,7 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">
-        图片建议尺寸：750*422像素；图片建议比例：16:9
-      </span>
+      <span class="text-grey-dark text-xs">图片建议尺寸：690*280</span>
     </el-form-item>
     <el-form-item
       label="关联商家"
@@ -57,7 +55,7 @@
       >
         <el-select v-model="form.targetId">
           <el-option
-            v-for="(article, index) of articles.items"
+            v-for="(article, index) of articles"
             :key="index"
             :label="article.title"
             :value="article.id"
@@ -132,6 +130,7 @@ export default {
       goodsMore: true,
       goodsPage: 1,
       isInit: true,
+      articles: null,
     }
   },
   mounted() {
@@ -143,19 +142,16 @@ export default {
       if (this.form.targetType === this.consts.GOODS) {
         this.getGoods()
       }
+      if (this.form.isArticle) {
+        this.fetchArticle()
+      }
     }
   },
   setup(ctx, context) {
-    const params = {
-      perPage: 99,
-    }
     const result = useQuery([], context.root.api.merchants)
-    const articles = useQuery([], () => context.root.api.articles({ params }))
     return {
       ...result,
       merchants: result.data,
-      ...articles,
-      articles: articles.data,
     }
   },
   methods: {
@@ -193,14 +189,28 @@ export default {
         })
       })
     },
-
-    changeMerchant() {
+    changeMerchant(e) {
       this.form.targetType = null
       this.form.targetId = null
+      if (this.form.isArticle) {
+        this.fetchArticle()
+      }
     },
     changeType() {
       this.form.targetType = null
       this.form.targetId = null
+      if (this.form.merchantId) {
+        this.fetchArticle()
+      }
+    },
+    fetchArticle() {
+      const params = {
+        perPage: 99,
+        merchantId: this.form.merchantId,
+      }
+      this.api.articles({ params }).then(({ items }) => {
+        this.articles = items
+      }, this.$error)
     },
     changeTargetType() {
       this.form.targetId = null
