@@ -1,6 +1,6 @@
 <template>
   <el-container
-    v-if="!isLogin && $route.path === '/'"
+    v-if="!isLogin && ($route.path === '/' || !$route.path)"
     class="flex w-full h-full items-center"
   >
     <Login />

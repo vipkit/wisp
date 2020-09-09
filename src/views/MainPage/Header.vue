@@ -1,10 +1,11 @@
 <template>
   <el-header class="fixed left-0 right-0 border-bottom header" height="55px">
     <el-row v-if="menus && hasMerchant" type="flex">
-      <el-aside width="200px" class="logo justify-center items-center">
-        <router-link to="/articles">
-          <!-- <img width="128" src="@/assets/logo.png" /> -->
-        </router-link>
+      <el-aside
+        width="200px"
+        class="logo flex justify-center items-center text-white text-xl"
+      >
+        <router-link to="/articles">服务商平台</router-link>
       </el-aside>
       <div
         style="padding-left: 10px"

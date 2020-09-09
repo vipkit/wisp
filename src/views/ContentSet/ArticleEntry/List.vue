@@ -92,7 +92,7 @@ export default {
   methods: {
     async deleteArticleEntry(id) {
       await this.$confirm('确定要删除吗')
-      api.deleteArticleEntry(id).then(() => {
+      api.deleteArticleEntry({ id }).then(() => {
         this.$message.success('已删除')
         this.refetch()
       }, this.$error)
