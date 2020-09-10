@@ -128,7 +128,7 @@ export default {
         ' | ' +
         value.name +
         ' | ' +
-        this.consts.ActivityTypeEnum[value.activityType]
+        this.consts.ActivityTypeEnum[value.type]
       return label
     },
   },

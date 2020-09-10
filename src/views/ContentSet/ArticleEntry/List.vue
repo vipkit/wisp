@@ -23,6 +23,9 @@
               />
             </el-select>
           </el-form-item>
+          <el-form-item label="名称">
+            <el-input v-model="filters.q" placeholder="请输入名称" />
+          </el-form-item>
           <el-form-item>
             <el-button native-type="submit" type="primary" size="mini">
               查询
