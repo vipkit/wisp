@@ -9,7 +9,7 @@
       :loading="loading"
       clearable
       v-bind="$attrs"
-      class="w-64"
+      style="width: 350px"
       @focus="focus"
       @clear="clear"
       v-on="$listeners"
@@ -17,7 +17,7 @@
       <el-option
         v-for="(option, index) in data"
         :key="index"
-        :label="option[dictLabel]"
+        :label="type === 'coupon' ? couponLabel(option) : goodsLabel(option)"
         :value="option[dictValue].toString()"
       />
       <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
@@ -59,6 +59,10 @@ export default {
     hasMore: {
       type: Boolean,
       default: true,
+    },
+    type: {
+      type: String,
+      required: true,
     },
   },
   data() {
@@ -113,6 +117,22 @@ export default {
         this.keyword = ''
         this.request({ page: 1 })
       }
+    },
+    goodsLabel: function (value) {
+      const label = value.code + ' | ' + value.name + ' | ' + '已上架'
+      return label
+    },
+    couponLabel: function (value) {
+      const label =
+        value.code +
+        ' | ' +
+        value.name +
+        ' | ' +
+        this.consts.ActivityTypeEnum[value.activityType] +
+        ' ｜ ' +
+        '正在进行'
+
+      return label
     },
   },
 }

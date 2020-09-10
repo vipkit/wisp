@@ -16,6 +16,21 @@ export const ProviderBannerStatusEnum = {
   ONLINE: '已发布',
   OFFLINE: '下线',
 }
+
 export const DRAFT = 'DRAFT'
 export const ONLINE = 'ONLINE'
 export const OFFLINE = 'OFFLINE'
+
+export const ActivityTypeEnum = {
+  NORMAL: '常规券券',
+  ONLY_NEWBIE: '新用户券',
+  INVITE: '邀请券',
+  COLLECT: '集赞券',
+}
+
+export const NORMAL = 'NORMAL'
+export const ONLY_NEWBIE = 'ONLY_NEWBIE'
+export const COLLECT = 'COLLECT'
+export const INVITE = 'INVITE'
+
+export const PUBLIC = 'PUBLIC'

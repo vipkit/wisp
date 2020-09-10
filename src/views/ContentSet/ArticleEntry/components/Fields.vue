@@ -4,6 +4,7 @@
       <el-date-picker
         v-model="form.time"
         type="datetimerange"
+        :picker-options="pickerOptions"
         :editable="false"
         value-format="yyyy-MM-dd HH:mm:ss"
         :default-time="['00:00:00', '23:59:59']"
@@ -48,6 +49,29 @@ export default {
   data() {
     return {
       articles: [],
+      minDate: '',
+      pickerOptions: {
+        onPick: ({ minDate }) => {
+          this.minDate = minDate
+        },
+        disabledDate: time => {
+          if (!this.minDate) return
+          const minDate =
+            this.minDate.getFullYear() +
+            '-' +
+            (this.minDate.getMonth() + 1) +
+            '-' +
+            this.minDate.getDate() +
+            ' 23:59:59'
+
+          let curDate = new Date(minDate).getTime()
+          let oneWeek = 7 * 24 * 3600 * 1000
+          let oneDay = 24 * 3600 * 1000
+          let last = curDate - oneWeek - oneDay
+          let pre = curDate + oneWeek
+          return time.getTime() < last || time.getTime() > pre
+        },
+      },
     }
   },
   setup(ctx, context) {
@@ -63,6 +87,7 @@ export default {
   },
   methods: {
     changeTime(e) {
+      this.minDate = ''
       const [publishAtFrom, publishAtTo] = e
       const params = {
         publishAtFrom,
@@ -71,11 +96,9 @@ export default {
       }
       this.api.articles({ params }).then(({ items }) => {
         this.articles = items
-        console.log(items)
       }, this.$error)
     },
     changeArticle(e) {
-      console.log(e)
       if ([...e].includes('all')) {
         this.form.articleIds = this.articles.map(item => item.id)
       }
