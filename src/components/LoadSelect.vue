@@ -55,11 +55,6 @@ export default {
       type: [Number, String],
       default: 1,
     },
-    // 传入的商家id
-    merchantId: {
-      type: [Number, String],
-      default: 1,
-    },
     // 是否还有更多数据
     hasMore: {
       type: Boolean,
@@ -76,7 +71,6 @@ export default {
     // 请求下一页的数据
     loadMore() {
       // 如果没有更多数据，则不请求
-
       if (!this.hasMore) {
         return
       }
@@ -90,7 +84,6 @@ export default {
         page: this.page + 1,
         // more: true,
         q: this.keyword,
-        merchantId: this.merchantId,
       }
       this.request(params).then(() => {
         if (this.hasMore) {
@@ -110,7 +103,6 @@ export default {
       this.request({
         page: 1,
         keyword: keyword,
-        merchantId: this.merchantId,
       }).then(() => {
         this.loading = false
       })

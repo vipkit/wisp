@@ -42,7 +42,7 @@
         />
         <el-table-column
           v-slot="{ row: { article: { imageUrl } } }"
-          min-width="120"
+          min-width="150"
           label="图片"
         >
           <el-popover placement="top" width="400">
@@ -53,7 +53,7 @@
             </div>
             <img
               slot="reference"
-              width="200"
+              width="120"
               class="cursor-pointer"
               :src="imageUrl + '?imageMogr2/thumbnail/!40p'"
             />
@@ -61,7 +61,7 @@
         </el-table-column>
         <el-table-column
           v-slot="{ row: { article: { merchant } } }"
-          min-width="120"
+          min-width="150"
           label="关联商家"
         >
           {{ merchant.name }}
@@ -70,7 +70,7 @@
           v-slot="{ row }"
           fixed="right"
           label="操作"
-          min-width="240"
+          min-width="150"
         >
           <div class="flex">
             <router-link
@@ -80,7 +80,7 @@
                 params: { id: row.article.id },
               }"
             >
-              <el-link type="primary" class="mr-4">编辑图文</el-link>
+              <el-link type="primary">编辑图文</el-link>
             </router-link>
             <el-link
               :underline="false"

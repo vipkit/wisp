@@ -3,12 +3,7 @@
     <el-header class="flex justify-between">
       <span>活动列表</span>
       <div class="flex">
-        <SortActivity
-          v-if="data"
-          class="mr-2"
-          :activities="data.items"
-          @refetch="refetch"
-        />
+        <SortActivity v-if="data" :activities="data.items" @refetch="refetch" />
         <router-link :to="{ name: 'ActivityCreate' }">
           <el-button type="primary" size="small">新建活动</el-button>
         </router-link>
@@ -24,7 +19,7 @@
         />
         <el-table-column
           v-slot="{ row: { imageUrl } }"
-          min-width="120"
+          min-width="150"
           label="图片"
         >
           <el-popover placement="top" width="400">
@@ -35,7 +30,7 @@
             </div>
             <img
               slot="reference"
-              width="200"
+              width="120"
               class="cursor-pointer"
               :src="imageUrl + '?imageMogr2/thumbnail/!40p'"
             />
@@ -53,7 +48,7 @@
           v-slot="{ row: { id } }"
           fixed="right"
           label="操作"
-          min-width="200"
+          min-width="150"
         >
           <router-link
             class="mr-4"

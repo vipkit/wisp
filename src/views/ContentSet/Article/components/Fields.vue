@@ -65,7 +65,6 @@
           v-model="form.targetId"
           :data="goods"
           :page="goodsPage"
-          :merchant-id="form.merchantId"
           :has-more="goodsMore"
           :request="getGoods"
         />
@@ -83,7 +82,6 @@
           :page="couponPage"
           :has-more="couponMore"
           :request="getCoupon"
-          :merchant-id="form.merchantId"
         />
       </el-form-item>
     </div>

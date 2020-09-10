@@ -13,21 +13,22 @@
           :index="index"
           class="list-item darkgrey sort-item"
         >
-          <span :class="{ 'flex-1': item.icon }">
+          <div class="w-1/3">
             {{
               item.name ||
               item.title ||
               (item.article ? item.article.title : '')
             }}
-          </span>
-          {{ item.icon }}
-          <div v-if="item.imageUrl" :class="{ 'flex-1': item.icon }">
-            <img
-              width="64"
-              :src="item.imageUrl + '?imageMogr2/thumbnail/!20p'"
-            />
           </div>
-          <div :class="{ 'flex-1': item.icon }" class="flex justify-end">
+          <div v-if="item.imageUrl" class="w-1/3 flex justify-center">
+            <div>
+              <img
+                width="64"
+                :src="item.imageUrl + '?imageMogr2/thumbnail/!40p'"
+              />
+            </div>
+          </div>
+          <div class="flex justify-end w-1/3">
             <div>
               <span class="position-mark">{{ index + 1 }}</span>
             </div>

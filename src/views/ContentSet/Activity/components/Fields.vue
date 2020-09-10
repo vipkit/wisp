@@ -85,7 +85,6 @@
             :page="goodsPage"
             :has-more="goodsMore"
             :request="getGoods"
-            :merchant-id="form.merchantId"
           />
         </el-form-item>
         <el-form-item
@@ -100,7 +99,6 @@
             :page="couponPage"
             :has-more="couponMore"
             :request="getCoupon"
-            :merchant-id="form.merchantId"
           />
         </el-form-item>
       </div>
