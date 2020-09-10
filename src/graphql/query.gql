@@ -46,6 +46,7 @@ query merchantCoupons($params: MerchantCouponParams) {
       id
       code
       name
+      activityType
     }
   }
 }
