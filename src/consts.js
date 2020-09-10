@@ -22,7 +22,7 @@ export const ONLINE = 'ONLINE'
 export const OFFLINE = 'OFFLINE'
 
 export const ActivityTypeEnum = {
-  NORMAL: '常规券券',
+  NORMAL: '常规券',
   ONLY_NEWBIE: '新用户券',
   INVITE: '邀请券',
   COLLECT: '集赞券',
