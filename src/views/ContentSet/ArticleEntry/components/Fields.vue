@@ -25,7 +25,7 @@
         :clearable="true"
         @change="changeArticle"
       >
-        <el-option value="all" label="全部" />
+        <el-option v-if="articles.length" value="all" label="全部" />
         <el-option
           v-for="(article, index) of articles"
           :key="index"
@@ -88,12 +88,13 @@ export default {
   methods: {
     changeTime(e) {
       this.minDate = ''
-      const [publishAtFrom, publishAtTo] = e
+      const [publishAtFrom, publishAtTo] = e || []
       const params = {
         publishAtFrom,
         publishAtTo,
         perPage: 999,
       }
+      this.form.articleIds = []
       this.api.articles({ params }).then(({ items }) => {
         this.articles = items
       }, this.$error)
