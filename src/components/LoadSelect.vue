@@ -119,7 +119,7 @@ export default {
       }
     },
     goodsLabel: function (value) {
-      const label = value.code + ' | ' + value.name + ' | ' + '已上架'
+      const label = value.code + ' | ' + value.name
       return label
     },
     couponLabel: function (value) {
@@ -128,10 +128,7 @@ export default {
         ' | ' +
         value.name +
         ' | ' +
-        this.consts.ActivityTypeEnum[value.activityType] +
-        ' ｜ ' +
-        '正在进行'
-
+        this.consts.ActivityTypeEnum[value.activityType]
       return label
     },
   },
