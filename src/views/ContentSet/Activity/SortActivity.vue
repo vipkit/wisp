@@ -9,7 +9,12 @@
     >
       排序
     </el-button>
-    <el-dialog v-if="visible" :visible.sync="visible" title="排序">
+    <el-dialog
+      v-if="visible"
+      :visible.sync="visible"
+      width="500px"
+      title="排序"
+    >
       <SlickList :list="options" @cancel="cancel" @save="save" />
     </el-dialog>
   </div>

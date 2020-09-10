@@ -44,7 +44,7 @@
         />
         <el-table-column
           v-slot="{ row: { imageUrl } }"
-          min-width="120"
+          min-width="150"
           label="图片"
         >
           <el-popover placement="top" width="400">
@@ -55,7 +55,7 @@
             </div>
             <img
               slot="reference"
-              width="200"
+              width="120"
               class="cursor-pointer"
               :src="imageUrl + '?imageMogr2/thumbnail/!40p'"
             />
@@ -79,7 +79,7 @@
           v-slot="{ row: { id, status } }"
           fixed="right"
           label="操作"
-          min-width="200"
+          min-width="150"
         >
           <router-link
             class="mr-4"
