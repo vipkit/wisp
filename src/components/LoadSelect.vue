@@ -21,12 +21,7 @@
         :value="option[dictValue].toString()"
       />
       <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
-      <el-option
-        v-if="hasMore"
-        disabled
-        label="加载中..."
-        value="-1"
-      ></el-option>
+      <el-option v-if="hasMore" disabled label="加载中..." value="-1" />
     </el-select>
   </div>
 </template>
@@ -81,6 +76,7 @@ export default {
     // 请求下一页的数据
     loadMore() {
       // 如果没有更多数据，则不请求
+
       if (!this.hasMore) {
         return
       }
@@ -88,6 +84,7 @@ export default {
       if (this.loadMore.intercept) {
         return
       }
+
       this.loadMore.intercept = true
       const params = {
         page: this.page + 1,
@@ -96,7 +93,9 @@ export default {
         merchantId: this.merchantId,
       }
       this.request(params).then(() => {
-        this.loadMore.intercept = false
+        if (this.hasMore) {
+          this.loadMore.intercept = false
+        }
       })
     },
     // 选中下拉框没有数据时，自动请求第一页的数据

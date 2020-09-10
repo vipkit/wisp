@@ -163,9 +163,9 @@ export default {
   },
   mounted() {
     if (this.isInit && this.form.merchantId) {
-      this.isInit = false
-      this.getCoupon()
-      this.getGoods()
+      Promise.all([this.getCoupon(), this.getGoods()]).then(() => {
+        this.isInit = false
+      })
     }
   },
   methods: {
@@ -183,10 +183,15 @@ export default {
           if (keyword) {
             this.goods = [...items]
           } else {
-            this.goods = [...goods, ...items]
+            const goodsTotal = [...goods, ...items]
+            const res = new Map()
+            this.goods = goodsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
           }
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
+
           resolve()
         })
       })
@@ -204,11 +209,14 @@ export default {
           if (keyword) {
             this.coupons = [...items]
           } else {
-            this.coupons = [...coupons, ...items]
+            const couponsTotal = [...coupons, ...items]
+            const res = new Map()
+            this.coupons = couponsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
           }
           this.couponMore = this.coupons.length < total
-          this.coupnPage = page
-
+          this.couponPage = page
           resolve()
         })
       })
