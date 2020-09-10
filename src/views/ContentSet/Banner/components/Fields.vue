@@ -86,6 +86,7 @@
             :page="goodsPage"
             :has-more="goodsMore"
             :request="getGoods"
+            type="goods"
           />
         </el-form-item>
         <el-form-item
@@ -101,6 +102,7 @@
             :page="couponPage"
             :has-more="couponMore"
             :request="getCoupon"
+            type="coupon"
           />
         </el-form-item>
       </div>
@@ -183,6 +185,13 @@ export default {
           page,
           q: keyword,
           merchantId: this.form.merchantId,
+          activityTypes: [
+            this.consts.NORMAL,
+            this.consts.ONLY_NEWBIE,
+            this.consts.COLLECT,
+            this.consts.INVITE,
+          ],
+          giveOutPatterns: [this.consts.PUBLIC],
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
           const coupons = this.coupons || []
