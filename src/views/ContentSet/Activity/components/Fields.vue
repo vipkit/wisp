@@ -54,7 +54,7 @@
             v-for="(article, index) of articles"
             :key="index"
             :label="article.title"
-            :value="article.id"
+            :value="article.id.toString()"
           />
         </el-select>
       </el-form-item>
