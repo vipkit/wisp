@@ -25,9 +25,12 @@
       <ImageUploader v-model="form.imageUrl" />
       <span class="text-sm text-gray-600">图片建议尺寸：690*280</span>
     </el-form-item>
-    <el-form-item label="关联商家" prop="merchantId">
+    <el-form-item
+      label="关联商家"
+      prop="merchantId"
+      :rules="[{ required: true, message: '请选择商家' }]"
+    >
       <el-select v-model="form.merchantId" @change="changeMerchant">
-        <el-option :value="null" label="无" />
         <el-option
           v-for="(merchant, index) of merchants"
           :key="index"

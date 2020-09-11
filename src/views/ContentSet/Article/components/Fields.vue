@@ -116,6 +116,16 @@
         <el-radio :label="true">公众号文章</el-radio>
       </el-radio-group>
     </el-form-item>
+    <el-form-item label="图文简介" prop="summary">
+      <el-input
+        v-model="form.summary"
+        type="textarea"
+        maxlength="45"
+        class="w-64"
+        show-word-limit
+        :autosize="{ minRows: 4, maxRows: 6 }"
+      />
+    </el-form-item>
     <el-form-item
       v-if="form.external"
       label="公众号文章链接"
