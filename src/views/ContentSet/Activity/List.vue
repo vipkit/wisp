@@ -57,7 +57,7 @@
               params: { id },
             }"
           >
-            <el-link type="primary" class="mr-4">编辑</el-link>
+            <el-link type="primary">编辑</el-link>
           </router-link>
           <el-link :underline="false" type="danger" @click="deleteActivity(id)">
             删除
@@ -95,3 +95,4 @@ export default {
   },
 }
 </script>
+<style lang="scss"></style>

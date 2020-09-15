@@ -4,7 +4,6 @@ import { Vue as VueIntegration } from '@sentry/integrations'
 import { Integrations } from '@sentry/tracing'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
-import './main.css'
 
 import VueCompositionApi from '@vue/composition-api'
 import ImageUploader from './components/ImgUploader.vue'
