@@ -47,7 +47,7 @@
           <span class="mx-2">|</span>
           <el-button
             type="text"
-            class="text-white hover:text-grey-light"
+            class="text-white hover:text-gray-200"
             @click.native="loginOut"
           >
             退出
