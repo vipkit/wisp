@@ -1,8 +1,9 @@
 export const mobilePattern = /^1(3|5|6|7|8|9)[0-9]\d{8}$/
 
-export const mobileValidator = [{
+export const mobileValidator = [
+  {
     required: true,
-    message: '手机号不能为空',
+    message: '账号不能为空',
     trigger: 'blur',
   },
   {
@@ -12,7 +13,8 @@ export const mobileValidator = [{
   },
 ]
 
-export const codeValidator = [{
+export const codeValidator = [
+  {
     required: true,
     message: '请填写验证码',
     trigger: 'blur',

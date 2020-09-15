@@ -11,7 +11,7 @@
           label-width="80px"
           @submit.prevent.native="submit"
         >
-          <el-form-item label="手机号" prop="login" for="mobile">
+          <el-form-item label="手机号" prop="mobile" for="mobile">
             <el-input
               id="mobile"
               v-model.trim="form.mobile"
