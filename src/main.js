@@ -94,5 +94,6 @@ if (process.env.NODE_ENV === 'production') {
       new Integrations.BrowserTracing(),
     ],
     tracesSampleRate: 1,
+    environment: process.env.VUE_APP_ENV,
   })
 }
