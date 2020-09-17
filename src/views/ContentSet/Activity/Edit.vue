@@ -52,10 +52,14 @@ export default {
       const data = this.data
       this.form = {
         ...data,
-        merchantId: data.merchant.id,
-        isArticle: data.targetType === this.consts.ARTICLE,
+        merchantId: data.merchant ? data.merchant.id : null,
+        isArticle: data.targetType
+          ? data.targetType === this.consts.ARTICLE
+          : null,
         targetType:
-          data.targetType === this.consts.ARTICLE ? null : data.targetType,
+          (!data.targetType || data.targetType) === this.consts.ARTICLE
+            ? null
+            : data.targetType,
       }
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen w-full">
     <div class="flex-1 flex items-center justify-center">
       <div class="form bg-white shadow-lg">
         <el-form
@@ -11,10 +11,10 @@
           label-width="80px"
           @submit.prevent.native="submit"
         >
-          <el-form-item label="账号" for="login" prop="login">
+          <el-form-item label="账号" for="login" prop="mobile">
             <el-input
               id="login"
-              v-model.trim="form.login"
+              v-model.trim="form.mobile"
               placeholder="请输入注册手机号码/商家用户名"
             />
           </el-form-item>
@@ -26,21 +26,20 @@
               type="password"
             />
           </el-form-item>
-          <el-button type="primary" class="load" native-type="submit"
-            >登录
+          <el-button type="primary" class="load" native-type="submit">
+            登录
           </el-button>
-          <div class="flex flex-end">
-            <router-link
-              to="/code_login"
-              class="greyLink hover:text-primary-normal darkgrey font-size-sm m-y-md"
-            >
+          <div class="flex flex-row-reverse">
+            <router-link to="/code_login" class="text-gray-700 text-sm my-2">
               验证码登录
             </router-link>
           </div>
         </el-form>
       </div>
     </div>
-    <PageFooter />
+    <div class="flex justify-center">
+      <PageFooter />
+    </div>
   </div>
 </template>
 <script>
@@ -54,11 +53,11 @@ export default {
   data() {
     return {
       form: {
-        login: '',
+        mobile: '',
         password: '',
       },
       rules: {
-        login: {
+        mobile: {
           required: true,
           message: '账号不能为空',
           trigger: 'blur',
@@ -72,14 +71,6 @@ export default {
     }
   },
   mounted() {
-    // const urlParams = new URLSearchParams(window.location.search)
-    // const tokenFromParams = urlParams.get('_tk')
-    // const localStorageToken = window.localStorage.wisp_token
-    // if (tokenFromParams && tokenFromParams !== localStorageToken) {
-    //   window.localStorage.wisp_token = `${tokenFromParams}`
-    //   window.location.reload()
-    //   return
-    // }
     if (window.localStorage.wisp_token) this.$router.push('/articles')
   },
   methods: {

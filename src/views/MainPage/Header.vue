@@ -1,50 +1,17 @@
 <template>
   <el-header class="fixed left-0 right-0 border-bottom header" height="55px">
-    <!-- <el-row v-if="menus && hasMerchant" type="flex"> -->
-    <el-row v-if="menus" type="flex">
-      <el-aside width="200px" class="center logo">
-        <router-link to="/articles">
-          <img width="128" src="@/assets/logo.png" />
-        </router-link>
+    <el-row v-if="menus && hasMerchant" type="flex">
+      <el-aside
+        width="200px"
+        class="logo flex justify-center items-center text-white text-xl"
+      >
+        <router-link to="/articles">服务商平台</router-link>
       </el-aside>
       <div
         style="padding-left: 10px"
         class="flex flex-grow w-full h-full header-nav items-center text-white"
-        :class="[
-          {
-            'justify-between': showIcon,
-          },
-        ]"
       >
-        <template v-if="showIcon && menusLimit">
-          <div class="flex h-full items-center">
-            <router-link
-              v-for="menu of menusLimit"
-              :key="'menus-limit' + menu.index"
-              :to="menu.menuItems[0].paths[0].path"
-              class="h-full pb-1 cursor text-base text-center hover:font-bold :opacity-100 hover:text-lg menu-item"
-            >
-              <div
-                :class="[
-                  {
-                    'border-b-2 border-white opacity-100 font-bold pb-2':
-                      activeIndex === menu.index,
-                  },
-                ]"
-              >
-                {{ menu.title }}
-              </div>
-            </router-link>
-            <div
-              style="width: 50px"
-              class="pb-3 h-full cursor-pointer text-center text-base menu-item hover:font-bold :opacity-100 hover:text-lg"
-              @click="drawer = true"
-            >
-              更多
-            </div>
-          </div>
-        </template>
-        <div v-if="!showIcon" class="flex items-center h-full">
+        <div class="flex items-center h-full">
           <router-link
             v-for="menu of menus"
             :key="'menu' + menu.index"
@@ -66,20 +33,15 @@
       </div>
       <div class="flex logo-container px-2 header-nav flex-row-reverse">
         <div class="flex items-center text-white">
-          <img
-            v-if="brandImage"
-            :src="brandImage"
-            class="w-8 h-8 mr-2 rounded-full"
-          />
           <el-tooltip placement="bottom">
             <div slot="content">
-              {{ brandName ? brandName : userName }}
+              {{ account }}
             </div>
             <div
               style="max-width: 100px"
               class="text-sm truncate cursor-pointer"
             >
-              {{ brandName ? brandName : userName }}
+              {{ account }}
             </div>
           </el-tooltip>
           <span class="mx-2">|</span>
@@ -93,40 +55,6 @@
         </div>
       </div>
     </el-row>
-    <el-drawer
-      :append-to-body="true"
-      :with-header="false"
-      :visible.sync="drawer"
-      direction="rtl"
-      :size="'300px'"
-    >
-      <div class="w-full h-full bg-primary-normal text-white">
-        <div class="flex flex-wrap">
-          <div
-            v-for="menu of menus"
-            :key="'menu-right' + menu.index"
-            class="w-1/2 p-4"
-          >
-            <div
-              :to="menu.menuItems[0].paths[0].path"
-              class="pb-1 cursor text-base text-center hover:font-bold :opacity-100 hover:text-lg"
-              @click="() => newPath(menu.menuItems[0].paths[0].path)"
-            >
-              <div
-                :class="[
-                  {
-                    'border-b-2 border-white opacity-100 font-bold pb-2':
-                      activeIndex === menu.index,
-                  },
-                ]"
-              >
-                {{ menu.title }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </el-drawer>
   </el-header>
 </template>
 <script>
@@ -136,34 +64,14 @@ export default {
     return {
       menus: null,
       activeIndex: null,
-      drawer: false,
-      bodyVisibleWidth: null,
-      visible: false,
     }
   },
   computed: {
     hasMerchant() {
       const account = this.$store.state.account
-      return account && account.hasMerchant
+      return account
     },
-    ...mapGetters(['userName', 'brandName', 'brandImage', 'merchant']),
-    showIcon() {
-      if (!this.menus) {
-        return
-      }
-      const headerWidth =
-        this.menus.length * 80 + this.menus.length * 8 + 200 + 180 + 10
-      return this.bodyVisibleWidth < headerWidth
-    },
-    menusLimit() {
-      if (!this.bodyVisibleWidth) return null
-      if (!this.showIcon) return null
-      const limitLength = Math.floor(
-        (this.bodyVisibleWidth - 380 - 50 - 10) / 88
-      )
-      const limitMenus = this.menus.slice(0, limitLength)
-      return limitMenus
-    },
+    ...mapGetters(['account']),
   },
   watch: {
     '$route.name'() {
@@ -171,45 +79,24 @@ export default {
         return
       }
       this.initMenus()
-      // this.getActiveMenu(this.$store.state.menus)
     },
     hasMerchant() {
-      this.initMenus()
-    },
-    merchant() {
       this.initMenus()
     },
     menus() {
       this.initMenus()
     },
-
-    bodyVisibleWidth: {
-      handler(newValue, oldValue) {
-        this.showIcon
-        this.menusLimit
-      },
-      deep: true,
-    },
   },
   mounted() {
     this.initMenus()
-    this.bodyVisibleWidth = document.body.clientWidth
-    window.onresize = () => {
-      return (() => {
-        this.bodyVisibleWidth = document.body.clientWidth
-      })()
-    }
   },
   methods: {
     async initMenus() {
-      // const account = this.$store.state.account
-      // if (!account || !account.hasMerchant) {
-      //   return
-      // }
-      // let Admission = this.merchant?.profile?.modules || []
-      // if (!Admission.length) return
       if (!this.$store.state || !this.$store.state.menus) return
-
+      const account = this.$store.state.account
+      if (!account) {
+        return
+      }
       const menus = this.$store.state.menus
       this.menus = menus
       const activeNav = this.menus
@@ -227,7 +114,6 @@ export default {
         )
         .flatMap(item => item.flatMap(path => path))
         .find(menu => this.$route.path.startsWith(menu.path))
-
       if (!activeNav) {
         return
       }
@@ -254,12 +140,8 @@ export default {
 
     loginOut() {
       this.$store.dispatch('signout').then(() => {
-        this.$router.push('/')
+        this.$router.push('/login')
       })
-    },
-    newPath(path) {
-      this.$router.push(path)
-      this.drawer = false
     },
   },
 }

@@ -41,6 +41,7 @@ export default {
         external: false,
         targetType: null,
         targetId: null,
+        summary: null,
       },
       paths: [{ to: 'ArticleList', name: '图文内容' }],
     }
@@ -60,4 +61,3 @@ export default {
   },
 }
 </script>
-

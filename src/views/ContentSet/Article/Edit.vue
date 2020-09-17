@@ -50,7 +50,6 @@ export default {
   watch: {
     data() {
       const data = this.data
-      console.log(data)
       this.form = {
         ...data,
         merchantId: data.merchant.id,
@@ -73,6 +72,7 @@ export default {
           external,
           targetType,
           targetId,
+          summary,
         } = this.form
         const params = {
           id,
@@ -86,6 +86,7 @@ export default {
           external,
           targetType,
           targetId,
+          summary,
         }
         api.updateArticle(params).then(() => {
           this.$message.success('成功')

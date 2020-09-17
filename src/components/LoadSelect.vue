@@ -1,27 +1,29 @@
 <template>
-  <el-select
-    v-loadmore="loadMore"
-    :value="value"
-    filterable
-    remote
-    :filter-method="handleSearch"
-    :loading="loading"
-    clearable
-    v-bind="$attrs"
-    class="w-64"
-    @focus="focus"
-    @clear="clear"
-    v-on="$listeners"
-  >
-    <el-option
-      v-for="(option, index) in data"
-      :key="index"
-      :label="option[dictLabel]"
-      :value="option[dictValue]"
-    />
-    <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
-    <el-option v-if="hasMore" disabled label="加载中..." value="-1"></el-option>
-  </el-select>
+  <div>
+    <el-select
+      v-loadmore="loadMore"
+      :value="value"
+      filterable
+      remote
+      :filter-method="handleSearch"
+      :loading="loading"
+      clearable
+      v-bind="$attrs"
+      style="width: 350px"
+      @focus="focus"
+      @clear="clear"
+      v-on="$listeners"
+    >
+      <el-option
+        v-for="(option, index) in data"
+        :key="index"
+        :label="type === 'coupon' ? couponLabel(option) : goodsLabel(option)"
+        :value="option[dictValue].toString()"
+      />
+      <!-- 此处加载中的value可以随便设置，只要不与其他数据重复即可 -->
+      <el-option v-if="hasMore" disabled label="加载中..." value="-1" />
+    </el-select>
+  </div>
 </template>
 
 <script>
@@ -53,15 +55,14 @@ export default {
       type: [Number, String],
       default: 1,
     },
-    // 传入的商家id
-    merchantId: {
-      type: [Number, String],
-      default: 1,
-    },
     // 是否还有更多数据
     hasMore: {
       type: Boolean,
       default: true,
+    },
+    type: {
+      type: String,
+      required: true,
     },
   },
   data() {
@@ -81,15 +82,17 @@ export default {
       if (this.loadMore.intercept) {
         return
       }
+
       this.loadMore.intercept = true
       const params = {
         page: this.page + 1,
         // more: true,
         q: this.keyword,
-        merchantId: this.merchantId,
       }
       this.request(params).then(() => {
-        this.loadMore.intercept = false
+        if (this.hasMore) {
+          this.loadMore.intercept = false
+        }
       })
     },
     // 选中下拉框没有数据时，自动请求第一页的数据
@@ -104,7 +107,6 @@ export default {
       this.request({
         page: 1,
         keyword: keyword,
-        merchantId: this.merchantId,
       }).then(() => {
         this.loading = false
       })
@@ -115,6 +117,19 @@ export default {
         this.keyword = ''
         this.request({ page: 1 })
       }
+    },
+    goodsLabel: function (value) {
+      const label = value.code + ' | ' + value.name
+      return label
+    },
+    couponLabel: function (value) {
+      const label =
+        value.code +
+        ' | ' +
+        value.name +
+        ' | ' +
+        this.consts.ActivityTypeEnum[value.type]
+      return label
     },
   },
 }

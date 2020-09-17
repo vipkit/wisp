@@ -23,9 +23,7 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs"
-        >图片建议尺寸：750*422像素；图片建议比例：16:9</span
-      >
+      <span class="text-sm text-gray-600">图片建议尺寸：200*220</span>
     </el-form-item>
     <el-form-item
       label="关联商家"
@@ -63,12 +61,13 @@
         :rules="[{ required: true, message: '请选择跳转的商品详情' }]"
       >
         <LoadSelect
+          v-if="goods"
           v-model="form.targetId"
           :data="goods"
           :page="goodsPage"
-          :merchant-id="form.merchantId"
           :has-more="goodsMore"
           :request="getGoods"
+          type="goods"
         />
       </el-form-item>
       <el-form-item
@@ -78,19 +77,23 @@
         :rules="[{ required: true, message: '请选择跳转的优惠券' }]"
       >
         <LoadSelect
+          v-if="coupons"
           v-model="form.targetId"
           :data="coupons"
           :page="couponPage"
           :has-more="couponMore"
           :request="getCoupon"
-          :merchant-id="form.merchantId"
+          type="coupon"
         />
       </el-form-item>
     </div>
     <el-form-item
       label="互动文案"
       prop="actionButtonText"
-      :rules="[{ required: true, message: '请输入互动文案' }]"
+      :rules="[
+        { required: true, message: '请输入互动文案' },
+        { max: 20, message: '不能超过20字' },
+      ]"
     >
       <el-input
         v-model="form.actionButtonText"
@@ -112,6 +115,16 @@
         <el-radio :label="false">自建图文</el-radio>
         <el-radio :label="true">公众号文章</el-radio>
       </el-radio-group>
+    </el-form-item>
+    <el-form-item label="图文简介" prop="summary">
+      <el-input
+        v-model="form.summary"
+        type="textarea"
+        maxlength="45"
+        class="w-64"
+        show-word-limit
+        :autosize="{ minRows: 4, maxRows: 6 }"
+      />
     </el-form-item>
     <el-form-item
       v-if="form.external"
@@ -142,12 +155,13 @@ export default {
   },
   data() {
     return {
-      goods: [],
-      coupons: [],
+      goods: null,
+      coupons: null,
       couponMore: true,
       couponPage: 1,
       goodsMore: true,
       goodsPage: 1,
+      isInit: true,
     }
   },
   setup(ctx, context) {
@@ -155,6 +169,13 @@ export default {
     return {
       ...result,
       merchants: result.data,
+    }
+  },
+  mounted() {
+    if (this.isInit && this.form.merchantId) {
+      Promise.all([this.getCoupon(), this.getGoods()]).then(() => {
+        this.isInit = false
+      })
     }
   },
   methods: {
@@ -167,7 +188,16 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
-          this.goods = [...this.goods, ...items]
+          const goods = this.goods || []
+          if (keyword) {
+            this.goods = [...items]
+          } else {
+            const goodsTotal = [...goods, ...items]
+            const res = new Map()
+            this.goods = goodsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
+          }
           this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
@@ -181,11 +211,27 @@ export default {
           page,
           q: keyword,
           merchantId: this.form.merchantId,
+          activityTypes: [
+            this.consts.NORMAL,
+            this.consts.ONLY_NEWBIE,
+            this.consts.COLLECT,
+            this.consts.INVITE,
+          ],
+          giveOutPatterns: [this.consts.PUBLIC],
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
-          this.coupons = [...this.coupons, ...items]
+          const coupons = this.coupons || []
+          if (keyword) {
+            this.coupons = [...items]
+          } else {
+            const couponsTotal = [...coupons, ...items]
+            const res = new Map()
+            this.coupons = couponsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
+          }
           this.couponMore = this.coupons.length < total
-          this.coupnPage = page
+          this.couponPage = page
           resolve()
         })
       })
@@ -196,6 +242,12 @@ export default {
     },
     changeTargetType() {
       this.form.targetId = null
+      if ([this.consts.GOODS].includes(this.form.targetType)) {
+        this.getGoods()
+      }
+      if ([this.consts.COUPON].includes(this.form.targetType)) {
+        this.getCoupon()
+      }
     },
   },
 }

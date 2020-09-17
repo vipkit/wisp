@@ -13,7 +13,7 @@
         :index="item.index"
       >
         <span slot="title">
-          <component :is="item.icon"></component>
+          <component :is="item.icon" />
           {{ item.title }}
         </span>
         <router-link
@@ -32,7 +32,7 @@
         </router-link>
       </el-submenu>
     </el-menu>
-    <el-menu router> </el-menu>
+    <el-menu router />
   </el-aside>
 </template>
 
@@ -42,7 +42,6 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState(['sideMenu', 'activePath']),
-    // ...mapGetters(['newMessage', 'merchant', 'flowApplyMessage']),
   },
 }
 </script>

@@ -23,14 +23,12 @@
       ]"
     >
       <ImageUploader v-model="form.imageUrl" />
-      <span class="text-grey-dark text-xs">
-        图片建议尺寸：750*422像素；图片建议比例：16:9
-      </span>
+      <span class="text-sm text-gray-600">图片建议尺寸：690*280</span>
     </el-form-item>
     <el-form-item
       label="关联商家"
       prop="merchantId"
-      :rules="[{ required: true, message: '请选择关联商家' }]"
+      :rules="[{ required: true, message: '请选择商家' }]"
     >
       <el-select v-model="form.merchantId" @change="changeMerchant">
         <el-option
@@ -41,14 +39,13 @@
         />
       </el-select>
     </el-form-item>
-    <div v-if="form.merchantId">
+    <template v-if="form.merchantId">
       <el-form-item label="跳转类型" prop="isArticle">
         <el-radio-group v-model="form.isArticle" @change="changeType">
           <el-radio :label="true">图文内容</el-radio>
           <el-radio :label="false">商家活动</el-radio>
         </el-radio-group>
       </el-form-item>
-
       <el-form-item
         v-if="form.isArticle && articles"
         label="图文内容"
@@ -57,10 +54,10 @@
       >
         <el-select v-model="form.targetId">
           <el-option
-            v-for="(article, index) of articles.items"
+            v-for="(article, index) of articles"
             :key="index"
             :label="article.title"
-            :value="article.id"
+            :value="article.id.toString()"
           />
         </el-select>
       </el-form-item>
@@ -70,7 +67,7 @@
           prop="targetType"
           :rules="[{ required: true, message: '请选择跳转类型' }]"
         >
-          <el-select v-model="form.targetType">
+          <el-select v-model="form.targetType" @change="changeTargetType">
             <el-option
               v-for="(key, value) of consts.ProviderLinkTargetEnum"
               :key="key"
@@ -91,7 +88,7 @@
             :page="goodsPage"
             :has-more="goodsMore"
             :request="getGoods"
-            :merchant-id="form.merchantId"
+            type="goods"
           />
         </el-form-item>
         <el-form-item
@@ -106,11 +103,11 @@
             :page="couponPage"
             :has-more="couponMore"
             :request="getCoupon"
-            :merchant-id="form.merchantId"
+            type="coupon"
           />
         </el-form-item>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 <script>
@@ -125,29 +122,39 @@ export default {
   },
   data() {
     return {
-      goods: [],
-      coupons: [],
+      goods: null,
+      coupons: null,
       couponMore: true,
       couponPage: 1,
       goodsMore: true,
       goodsPage: 1,
+      isInit: true,
+      articles: null,
+    }
+  },
+  mounted() {
+    if (this.isInit && this.form.merchantId) {
+      this.isInit = false
+      if (this.form.targetType === this.consts.COUPON) {
+        this.getCoupon()
+      }
+      if (this.form.targetType === this.consts.GOODS) {
+        this.getGoods()
+      }
+      if (this.form.isArticle) {
+        this.fetchArticle()
+      }
     }
   },
   setup(ctx, context) {
-    const params = {
-      perPage: 99,
-    }
     const result = useQuery([], context.root.api.merchants)
-    const articles = useQuery([], () => context.root.api.articles(params))
     return {
       ...result,
       merchants: result.data,
-      ...articles,
-      articles: articles.data,
     }
   },
   methods: {
-    getGoods({ page = 1, goodsMore = false, keyword = '' } = {}) {
+    getGoods({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
@@ -156,45 +163,85 @@ export default {
           merchantId: this.form.merchantId,
         }
         this.api.merchantGoods(params).then(({ total, items }) => {
-          if (goodsMore) {
-            this.goods = [...this.data, ...items]
+          const goods = this.goods || []
+          if (keyword) {
+            this.goods = [...items]
           } else {
-            this.goods = items
+            const goodsTotal = [...goods, ...items]
+            const res = new Map()
+            this.goods = goodsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
           }
-          this.goodsMore = page * 10 < total
+          this.goodsMore = this.goods.length < total
           this.goodsPage = page
           resolve()
         })
       })
     },
-    getCoupon({ page = 1, couponMore = false, keyword = '' } = {}) {
+    getCoupon({ page = 1, keyword = '' } = {}) {
       return new Promise(resolve => {
         // 访问后端接口API
         const params = {
           page,
           q: keyword,
           merchantId: this.form.merchantId,
+          activityTypes: [
+            this.consts.NORMAL,
+            this.consts.ONLY_NEWBIE,
+            this.consts.COLLECT,
+            this.consts.INVITE,
+          ],
+          giveOutPatterns: [this.consts.PUBLIC],
         }
         this.api.merchantCoupons(params).then(({ total, items }) => {
-          if (couponMore) {
-            this.coupons = [...this.coupons, ...items]
+          const coupons = this.coupons || []
+          if (keyword) {
+            this.coupons = [...items]
           } else {
-            this.coupons = items
+            const couponsTotal = [...coupons, ...items]
+            const res = new Map()
+            this.coupons = couponsTotal.filter(
+              item => !res.has(item.id) && res.set(item.id, 1)
+            )
           }
-          this.couponMore = page * 10 < total
-          this.coupnPage = page
+          this.couponMore = this.coupons.length < total
+          this.couponPage = page
           resolve()
         })
       })
     },
-
-    changeMerchant() {
+    changeMerchant(e) {
       this.form.targetType = null
       this.form.targetId = null
+      if (this.form.isArticle) {
+        this.fetchArticle()
+      }
     },
     changeType() {
       this.form.targetType = null
       this.form.targetId = null
+      if (this.form.merchantId) {
+        this.fetchArticle()
+      }
+    },
+    fetchArticle() {
+      const params = {
+        perPage: 99,
+        merchantId: this.form.merchantId,
+      }
+      this.api.articles({ params }).then(({ items }) => {
+        this.articles = items
+      }, this.$error)
+    },
+    changeTargetType() {
+      this.form.targetId = null
+      if ([this.consts.GOODS].includes(this.form.targetType)) {
+        this.getGoods()
+      }
+      if ([this.consts.COUPON].includes(this.form.targetType)) {
+        this.getCoupon()
+      }
     },
   },
 }

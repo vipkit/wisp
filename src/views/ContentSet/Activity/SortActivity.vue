@@ -4,8 +4,8 @@
       type="primary"
       size="small"
       class="mr-4"
-      :disabled="banners.length < 2"
-      @click="sortBanner"
+      :disabled="activities.length < 2"
+      @click="sortEntry"
     >
       排序
     </el-button>
@@ -27,7 +27,7 @@ export default {
   components: {
     SlickList,
   },
-  props: ['banners'],
+  props: ['activities'],
   data() {
     return {
       options: [],
@@ -39,13 +39,13 @@ export default {
       this.visible = false
     },
     save(ids) {
-      api.sortBanner({ ids }).then(() => {
+      api.sortActivity({ ids }).then(() => {
         this.$emit('refetch')
         this.visible = false
       }, this.$error)
     },
-    sortBanner() {
-      this.options = this.banners.map(item => {
+    sortEntry() {
+      this.options = this.activities.map(item => {
         return {
           ...item,
         }

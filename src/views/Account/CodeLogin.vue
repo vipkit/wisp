@@ -1,9 +1,6 @@
 <template>
-  <div class="columns flex space-between flex-grow">
-    <NoLoginHeader />
-    <div
-      class="flex-grow flex items-center justify-center bg-grey-lightest py-3"
-    >
+  <div class="flex flex-col h-screen w-full">
+    <div class="flex-1 flex items-center justify-center">
       <div class="form bg-white shadow-lg">
         <el-form
           ref="form"
@@ -17,7 +14,7 @@
           <el-form-item label="手机号" prop="login" for="mobile">
             <el-input
               id="mobile"
-              v-model.trim="form.login"
+              v-model.trim="form.mobile"
               placeholder="请输入手机号码"
             />
           </el-form-item>
@@ -28,18 +25,15 @@
                 v-model.trim="form.code"
                 placeholder="请输入6位验证码"
               >
-                <send-code slot="append" :mobile="form.login" />
+                <SendCode slot="append" :mobile="form.mobile" />
               </el-input>
             </div>
           </el-form-item>
           <el-button class="load" type="primary" native-type="submit"
             >登录</el-button
           >
-          <div class="flex flex-end">
-            <router-link
-              to="/login"
-              class="greyLink darkgrey font-size-sm m-y-md"
-            >
+          <div class="flex flex-row-reverse">
+            <router-link to="/login" class="text-gray-700 text-sm my-2">
               密码登录
             </router-link>
           </div>
@@ -62,17 +56,17 @@ export default {
   data() {
     return {
       form: {
-        login: '',
+        mobile: '',
         code: '',
       },
       rules: {
-        login: mobileValidator,
+        mobile: mobileValidator,
         code: codeValidator,
       },
     }
   },
   mounted() {
-    if (window.localStorage.wisp_token) this.$router.push('/')
+    if (window.localStorage.wisp_token) this.$router.push('/articles')
   },
   methods: {
     submit() {

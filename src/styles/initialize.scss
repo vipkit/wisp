@@ -24,8 +24,10 @@ textarea {
 a:hover,
 a:visited,
 a:link,
-a:active {
+a:active,
+button {
   text-decoration: none;
+  outline: 0 !important;
 }
 
 ul,

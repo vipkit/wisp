@@ -1,8 +1,12 @@
-query members($params:MemberQueryParams) {
-  members(params:$params) {
+query members($params: MemberQueryParams) {
+  members(params: $params) {
     total
-    items{
+    items {
       id
+      mobile
+      createdAt
+      avatarUrl
+      nickName
     }
   }
 }

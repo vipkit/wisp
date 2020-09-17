@@ -9,6 +9,34 @@
       </div>
     </el-header>
     <el-main class="main">
+      <Route v-slot="{ query, reset }">
+        <el-form
+          inline
+          @submit.native.prevent="query({ ...filters }).catch(refetch)"
+        >
+          <el-form-item label="标题">
+            <el-input v-model="filters.q" placeholder="标题" />
+          </el-form-item>
+          <el-form-item label="关联商家">
+            <el-select v-model="filters.merchantId" placeholder="请选择">
+              <el-option
+                v-for="(merchant, index) of merchants"
+                :key="index"
+                :label="merchant.name"
+                :value="merchant.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button native-type="submit" type="primary" size="mini"
+              >查询</el-button
+            >
+            <el-button size="mini" @click="reset((filters = {}))"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </Route>
       <el-table v-if="data" :data="data.items">
         <el-table-column
           fixed="left"
@@ -25,49 +53,51 @@
         </el-table-column>
         <el-table-column
           v-slot="{ row: { merchant } }"
-          min-width="120"
+          min-width="150"
           label="关联商家"
         >
           {{ merchant.name }}
         </el-table-column>
         <el-table-column
-          v-slot="{ row: { type } }"
-          min-width="120"
-          label="关联小程序"
-        >
-          {{ type }}
-        </el-table-column>
-        <el-table-column
           v-slot="{ row: { id } }"
           fixed="right"
           label="操作"
-          min-width="200"
+          min-width="120"
         >
           <router-link
+            class="mr-4"
             :to="{
               name: 'ArticleEdit',
               params: { id },
             }"
           >
-            <el-link type="primary" class="mr-4">编辑</el-link>
+            <el-link type="primary">编辑</el-link>
           </router-link>
           <el-link :underline="false" type="danger" @click="deleteArticle(id)">
             删除
           </el-link>
         </el-table-column>
       </el-table>
+      <Pagination v-if="data && data.total" :total="data.total" />
     </el-main>
   </el-container>
 </template>
 <script>
-import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import { useFetch } from '@/hooks'
 
 export default {
-  setup(ctx, context) {
-    const params = { ...context.root.$route.query, perPage: 10 }
-    const result = useQuery([], () => context.root.api.articles(params))
-    return result
+  setup(props, context) {
+    const { data: merchants } = useFetch(() => ({
+      api: context.root.api.merchants,
+    }))
+    return {
+      merchants,
+      ...useFetch(() => ({
+        api: context.root.api.articles,
+        params: { ...context.root.$route.query },
+      })),
+    }
   },
   methods: {
     async deleteArticle(id) {
