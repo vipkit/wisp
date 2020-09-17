@@ -76,6 +76,7 @@ if (process.env.NODE_ENV === 'production') {
       '5000',
       /5\d{2}$/,
       'NavigationDuplicated',
+      'ResizeObserver',
     ],
 
     release:
