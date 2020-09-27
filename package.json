@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@baoshishu/vue-editor": "^0.2.8",
+    "@baoshishu/vue-editor": "^0.3.0",
     "@baoshishu/vue-query": "^0.1.4",
     "@sentry/browser": "^5.22.3",
     "@sentry/integrations": "^5.22.3",

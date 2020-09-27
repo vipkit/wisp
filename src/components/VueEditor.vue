@@ -28,6 +28,14 @@ export default {
           token: data.token,
           domain: data.domain,
           name: 'qiniu',
+          modifier: ({ width, height, url }) => {
+            const maxWidth = 750
+            if (width < maxWidth) {
+              return url
+            } else {
+              return `${url}?imageMogr2/thumbnail/${maxWidth}x`
+            }
+          },
         })),
       content: this.value,
     }
