@@ -26,6 +26,7 @@
 import Fields from './components/Fields'
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import { format } from 'date-fns'
 
 export default {
   components: {
@@ -74,6 +75,7 @@ export default {
           targetId,
           summary,
         } = this.form
+        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
         const params = {
           id,
           title,
@@ -81,7 +83,7 @@ export default {
           merchantId,
           actionButtonText,
           content,
-          publishAt,
+          publishAt: publishAt || nowTime,
           link,
           external,
           targetType,

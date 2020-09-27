@@ -23,6 +23,7 @@
 <script>
 import Fields from './components/Fields'
 import * as api from './api'
+import { format } from 'date-fns'
 
 export default {
   components: {
@@ -49,13 +50,17 @@ export default {
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
-        if (valid) {
-          console.log(this.form)
-          api.createArticle(this.form).then(() => {
-            this.$message.success('成功')
-            this.$router.push({ name: 'ArticleList' })
-          }, this.$error)
+        if (!valid) return
+        const { publishAt, ...commmon } = this.form
+        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
+        const params = {
+          ...commmon,
+          publishAt: publishAt || nowTime,
         }
+        api.createArticle(params).then(() => {
+          this.$message.success('成功')
+          this.$router.push({ name: 'ArticleList' })
+        }, this.$error)
       })
     },
   },
