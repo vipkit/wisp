@@ -880,10 +880,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@baoshishu/vue-editor@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.npm.taobao.org/@baoshishu/vue-editor/download/@baoshishu/vue-editor-0.2.8.tgz#d5c3f990a4a8530d447fc87968912db8c3abfa9f"
-  integrity sha1-1cP5kKSoUw1Ef8h5aJEtuMOr+p8=
+"@baoshishu/vue-editor@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/@baoshishu/vue-editor/download/@baoshishu/vue-editor-0.3.0.tgz?cache=0&sync_timestamp=1601195572648&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40baoshishu%2Fvue-editor%2Fdownload%2F%40baoshishu%2Fvue-editor-0.3.0.tgz#922d32577391b06621f09c81e7929151b7ab5f94"
+  integrity sha1-ki0yV3ORsGYh8JyB55KRUberX5Q=
 
 "@baoshishu/vue-query@^0.1.4":
   version "0.1.4"
