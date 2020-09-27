@@ -52,7 +52,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (!valid) return
         const { publishAt, ...commmon } = this.form
-        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
+        const nowTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
         const params = {
           ...commmon,
           publishAt: publishAt || nowTime,

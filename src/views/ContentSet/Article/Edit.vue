@@ -75,7 +75,7 @@ export default {
           targetId,
           summary,
         } = this.form
-        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
+        const nowTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
         const params = {
           id,
           title,
