@@ -74,6 +74,19 @@ export default {
           targetId,
           summary,
         } = this.form
+        const now = new Date()
+        const nowTime =
+          now.getFullYear() +
+          '-' +
+          (now.getMonth() + 1) +
+          '-' +
+          now.getDate() +
+          ' ' +
+          now.getHours() +
+          ':' +
+          now.getMinutes() +
+          ':' +
+          now.getSeconds()
         const params = {
           id,
           title,
@@ -81,7 +94,7 @@ export default {
           merchantId,
           actionButtonText,
           content,
-          publishAt,
+          publishAt: publishAt || nowTime,
           link,
           external,
           targetType,

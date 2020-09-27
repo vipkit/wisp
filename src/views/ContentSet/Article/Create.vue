@@ -49,13 +49,29 @@ export default {
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
-        if (valid) {
-          console.log(this.form)
-          api.createArticle(this.form).then(() => {
-            this.$message.success('成功')
-            this.$router.push({ name: 'ArticleList' })
-          }, this.$error)
+        if (!valid) return
+        const { publishAt, ...commmon } = this.form
+        const now = new Date()
+        const nowTime =
+          now.getFullYear() +
+          '-' +
+          (now.getMonth() + 1) +
+          '-' +
+          now.getDate() +
+          ' ' +
+          now.getHours() +
+          ':' +
+          now.getMinutes() +
+          ':' +
+          now.getSeconds()
+        const params = {
+          ...commmon,
+          publishAt: publishAt || nowTime,
         }
+        api.createArticle(params).then(() => {
+          this.$message.success('成功')
+          this.$router.push({ name: 'ArticleList' })
+        }, this.$error)
       })
     },
   },
