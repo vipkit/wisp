@@ -26,6 +26,7 @@
 import Fields from './components/Fields'
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
+import { format } from 'date-fns'
 
 export default {
   components: {
@@ -74,19 +75,7 @@ export default {
           targetId,
           summary,
         } = this.form
-        const now = new Date()
-        const nowTime =
-          now.getFullYear() +
-          '-' +
-          (now.getMonth() + 1) +
-          '-' +
-          now.getDate() +
-          ' ' +
-          now.getHours() +
-          ':' +
-          now.getMinutes() +
-          ':' +
-          now.getSeconds()
+        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
         const params = {
           id,
           title,
