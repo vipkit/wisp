@@ -82,7 +82,11 @@ export default {
           imageUrl,
           merchantId,
           targetId,
-          targetType: isArticle ? this.consts.ARTICLE : targetType,
+          targetType: merchantId
+            ? isArticle
+              ? this.consts.ARTICLE
+              : targetType
+            : null,
         }
         api.updateBanner(params).then(() => {
           this.$message.success('成功')
