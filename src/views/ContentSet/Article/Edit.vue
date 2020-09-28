@@ -26,7 +26,7 @@
 import Fields from './components/Fields'
 import { useQuery } from '@baoshishu/vue-query'
 import * as api from './api'
-import formatDate from '@/utils/formatDate.js'
+import { formatDate } from '@/utils/formatTime.js'
 
 export default {
   components: {
