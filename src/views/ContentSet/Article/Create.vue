@@ -51,10 +51,13 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (!valid) return
-        const { publishAt, ...commmon } = this.form
+        const { publishAt, external, link, content, ...commmon } = this.form
         const nowTime = formatDate(new Date())
         const params = {
           ...commmon,
+          external,
+          content: !external ? content : null,
+          link: external ? link : null,
           publishAt: publishAt || nowTime,
         }
         api.createArticle(params).then(() => {

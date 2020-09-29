@@ -111,7 +111,7 @@
       />
     </el-form-item>
     <el-form-item label="图文类型" prop="external">
-      <el-radio-group v-model="form.external" @change="changeExternalType">
+      <el-radio-group v-model="form.external">
         <el-radio :label="false">自建图文</el-radio>
         <el-radio :label="true">公众号文章</el-radio>
       </el-radio-group>
@@ -235,10 +235,6 @@ export default {
           resolve()
         })
       })
-    },
-    changeExternalType() {
-      this.form.link = null
-      this.form.content = null
     },
     changeMerchant() {
       this.form.targetType = null
