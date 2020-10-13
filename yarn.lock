@@ -885,10 +885,10 @@
   resolved "https://registry.npm.taobao.org/@baoshishu/vue-editor/download/@baoshishu/vue-editor-0.3.0.tgz?cache=0&sync_timestamp=1601195572648&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40baoshishu%2Fvue-editor%2Fdownload%2F%40baoshishu%2Fvue-editor-0.3.0.tgz#922d32577391b06621f09c81e7929151b7ab5f94"
   integrity sha1-ki0yV3ORsGYh8JyB55KRUberX5Q=
 
-"@baoshishu/vue-query@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.npm.taobao.org/@baoshishu/vue-query/download/@baoshishu/vue-query-0.1.4.tgz#218b30585e357701665d8d9a64a28957d26cc0e3"
-  integrity sha1-IYswWF41dwFmXY2aZKKJV9JswOM=
+"@baoshishu/vue-query@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.npm.taobao.org/@baoshishu/vue-query/download/@baoshishu/vue-query-0.1.6.tgz#f0ba1791c2cf831e8e4a21fd65345b35bfd11579"
+  integrity sha1-8LoXkcLPgx6OSiH9ZTRbNb/RFXk=
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -1617,12 +1617,12 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/composition-api@^1.0.0-beta.11":
-  version "1.0.0-beta.11"
-  resolved "https://registry.npm.taobao.org/@vue/composition-api/download/@vue/composition-api-1.0.0-beta.11.tgz#260e9d23d59078d7a6358fec53c77a9adc0cd5b5"
-  integrity sha1-Jg6dI9WQeNemNY/sU8d6mtwM1bU=
+"@vue/composition-api@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.npm.taobao.org/@vue/composition-api/download/@vue/composition-api-0.6.7.tgz#4481b547cea65dc936432f7efcf1a39f9c69420c"
+  integrity sha1-RIG1R86mXck2Qy9+/PGjn5xpQgw=
   dependencies:
-    tslib "^2.0.1"
+    tslib "^2.0.0"
 
 "@vue/preload-webpack-plugin@^1.1.0":
   version "1.1.2"
@@ -9609,10 +9609,10 @@ tslib@^1.9.0, tslib@^1.9.3:
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.13.0.tgz?cache=0&sync_timestamp=1596752024863&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha1-yIHhPMcBWJTtkUhi0nZDb6mkcEM=
 
-tslib@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.1.tgz?cache=0&sync_timestamp=1596754937440&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
-  integrity sha1-QQ6w0RPltjVkkO7HSWA3JbAhtD4=
+tslib@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz?cache=0&sync_timestamp=1602286724979&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
 
 tty-browserify@0.0.0:
   version "0.0.0"
