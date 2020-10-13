@@ -45,10 +45,14 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          const { isArticle, targetType, ...common } = this.form
+          const { isArticle, targetType, merchantId, ...common } = this.form
           const params = {
             ...common,
-            targetType: isArticle ? this.consts.ARTICLE : targetType,
+            targetType: merchantId
+              ? isArticle
+                ? this.consts.ARTICLE
+                : targetType
+              : null,
           }
           api.createBanner(params).then(() => {
             this.$message.success('成功')

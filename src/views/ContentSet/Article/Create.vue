@@ -23,7 +23,7 @@
 <script>
 import Fields from './components/Fields'
 import * as api from './api'
-import { format } from 'date-fns'
+import { formatDate } from '@/utils/formatTime.js'
 
 export default {
   components: {
@@ -51,10 +51,13 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (!valid) return
-        const { publishAt, ...commmon } = this.form
-        const nowTime = format(new Date(), 'yy-MM-dd HH:mm:ss')
+        const { publishAt, external, link, content, ...commmon } = this.form
+        const nowTime = formatDate(new Date())
         const params = {
           ...commmon,
+          external,
+          content: !external ? content : null,
+          link: external ? link : null,
           publishAt: publishAt || nowTime,
         }
         api.createArticle(params).then(() => {
