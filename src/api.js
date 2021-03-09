@@ -1,7 +1,7 @@
 import request from './utils/request'
 import * as query from './graphql/query.gql'
 import * as mutation from './graphql/mutation.gql'
-const apiPath = process.env.API_ENV || 'https://api.zanquan.xyz'
+const apiPath = process.env.API_ENV || 'https://api.vipkit.net'
 const API_URL = `${apiPath}/provider/graphql`
 
 export const sendCode = mobile =>

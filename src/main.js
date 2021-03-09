@@ -81,7 +81,7 @@ if (process.env.NODE_ENV === 'production') {
     ],
 
     release:
-      (process.env.API_ENV === 'https://api.zanquan.xyz'
+      (process.env.API_ENV === 'https://api.vipkit.net'
         ? 'staging@'
         : 'production@') + require('@/../package.json')['version'],
 
